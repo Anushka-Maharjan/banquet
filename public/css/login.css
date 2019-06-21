@@ -1,0 +1,247 @@
+@import "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+@media (min-width: 768px) and (max-width: 991px) {
+    body{
+        background-color: #d5eaff;
+        /*background: url("../../images/mustang.jpg")!important;*/
+        /*background-repeat:no-repeat;*/
+        /*background-size:fill;*/
+        /*background-position:center;*/
+    }
+    .register-box{
+        top:835px!important;
+        padding-left:0!important;
+        width:100%!important;
+    }
+    .register-box input{
+        font-size:35px!important;
+    }
+    .register-box label {
+        font-size: 36px!important;
+    }
+    .register-box .form-group{
+        margin-bottom:7%!important;
+    }
+    .register-btn{
+        height:85px!important;
+        margin-left:10%!important;
+        width:80%!important;
+    }
+    .return-back{
+        padding-top: 5%!important;
+        font-size:80px!important;
+    }
+    .border-bottom{
+        border-bottom: 3px solid #2282f6!important;
+    }
+    .logo-box h2{
+        font-size: 52px!important;
+    }
+
+}
+body{
+    /*background: url("http://balkansnews.net/img/background.jpg") no-repeat center center;*/
+    background-color: #052b53;
+
+    /*background: url("../../images/mustang.jpg") no-repeat;*/
+    /*background-size:cover;*/
+    padding:0!important;
+    margin:0!important;
+}
+
+.login-box{
+    width: 35%;
+    height: 40%;
+    background: rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
+    color: #ffffff;
+    top: 60%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%,-50%);
+    box-sizing: border-box;
+    opacity: 0.8;
+    box-shadow: 0 20px 28px rgba(2,0.5,0.5,0.5);
+}
+.return-back{
+    padding-top: 1%;
+    position:absolute;
+    left:4%;
+    float:left;
+    width:10%;
+    font-size:40px;
+
+}
+.return-back a{
+    color:#1e242c;
+}
+.return-back a:hover{
+    color:white;
+}
+.width100{
+    width:100%;
+}
+.register-box{
+    width: 90%;
+    height: auto;
+    background: rgba(0, 0, 0, 0.8);
+    border-radius: 5px;
+    color: #ffffff;
+    top: 338px;
+    left: 50%;
+    position: absolute;
+    padding: 2% 0 0 10%;
+    transform: translate(-50%,-50%);
+    box-sizing: border-box;
+    opacity: 0.8;
+    box-shadow: 0 20px 28px rgba(2,0.5,0.5,0.5);
+}
+.register-box .form-group{
+    margin-bottom:3%;
+}
+.logo-box{
+    top: 0;
+    background:rgba(255,255,255,0.3);
+    position: absolute;
+    width: 100%;
+    height: auto;
+    display: inline-flex;
+    color: #c7cdd4;
+
+}
+.notice{
+    text-align: center;
+    text-decoration: underline;
+    color:white;
+    font-style:italic;
+    margin-bottom:20px;
+}
+.logo-login{
+    height: 3%;
+    width: 5%;
+    margin-left:35%;
+}
+
+
+.text-box-username{
+    width: 80%;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border-bottom: 1px solid white;
+
+}
+.text-box-password{
+    width: 80%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    border-bottom: 1px solid white;
+
+}
+.register-box label{
+    font-size: 16px;
+}
+.register-box input{
+    font-family: Roboto;
+    border: none;
+    outline: none;
+    background: none;
+    color: white;
+    font-size: 16px;
+    padding-left: 2%;
+    margin-bottom: 2%;
+}
+.border-bottom{
+    border-bottom: 1px solid #2282f6;
+
+}
+.text-box input{
+    font-family: Roboto;
+    border: none;
+    outline: none;
+    background: none;
+    color: white;
+    font-size: 16px;
+    padding-left: 2%;
+    margin-bottom: 2%;
+}
+
+.width90{
+    width: 90%;
+
+}
+.register-text{
+    width:100%;
+    text-align:center;
+    margin-top: 5%;
+    padding: 2px;
+    bottom: 40px;
+    color:white;
+    /*left: 50%;*/
+    position: absolute;
+    font-size: 25px;
+    /*font-style:italic;*/
+}
+.register-text a{
+    color:white;
+    font-weight: bold;
+}
+.register-text a:hover{
+    color:#2282f6;
+}
+.register-btn{
+    background: #2282f6;
+    border-radius:5px;
+    color:white;
+    font-family: Roboto;
+    width: 100%;
+    height:35px;
+    border: none;
+    font-size: 18px;
+    margin-top: 1%;
+    margin-left:50%;
+    padding: 2px;
+}
+.login-btn{
+    background: #2282f6;
+    border-radius:5px;
+    color:white;
+    font-family: Roboto;
+    width: 30%;
+    height:35px;
+    border: none;
+    font-size: 18px;
+    margin-top: 1%;
+    padding: 2px;
+    bottom: 15%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    position: absolute;
+}
+.login-btn:hover{
+    opacity: 0.8;
+}
+.register-btn:hover{
+    opacity: 0.8;
+}
+
+.forgot-pass{
+    width:100%;
+    text-align:center;
+    margin-top: 5%;
+    padding: 2px;
+    bottom: 0;
+    color:white;
+    /*left: 50%;*/
+    position: absolute;
+    font-style:italic;
+}
+.forgot-pass a{
+    color:white;
+    font-weight: bold;
+}
+.forgot-pass a:hover{
+    color:red;
+}

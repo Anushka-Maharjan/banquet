@@ -1,0 +1,366 @@
+@import "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css";
+html, body{
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    font-family: Roboto;
+}
+/*#####################################header css##################################*/
+.header{
+    height: 12%;
+    background: #052b53;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.sub-header{
+    height:6%;
+    background: #001c3a;
+    color: white;
+    width:100%;
+
+}
+.sub-header a{
+    color: white;
+}
+.sub-header ul{
+    padding-top: 5px;
+}
+.sub-header ul li{
+    list-style: none;
+    display: inline;
+    margin-right: 5%;
+}
+.header-font{
+    color:#ffffff;
+    margin-right: 4%;
+}
+.header-menu{
+    height: 100%;
+}
+.header-logo{
+    float: left;
+    display: inline-flex;
+    width: 35%;
+    color:#c7cdd4;
+}
+.none{
+    display: none;
+}
+.mobile-menu{
+    display: none;
+    width:5%;
+    position: relative;
+    top:30%;
+    left:5%;
+    float:left;
+}
+
+.logo{
+    height: 100%;
+    width: 80px;
+
+}
+.logo-box {
+    top: 6%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    width: 30%;
+    height: auto;
+}
+.user-account{
+    height: 100%;
+    background: #052b53;
+    float: right;
+    width: 30%;
+    padding-top:1%;
+    border-bottom-left-radius: 38px;
+    border-top-left-radius: 60px;
+    border-left: #f1f1f1 4px solid;
+    display: inline-block;
+}
+.header-sales{
+    padding-top: 1%;
+    width:85%;
+}
+.text-white{
+    color: #fff;
+    margin-left: 5%;
+    margin-top: 1%;
+    margin-bottom: 0;
+;
+}
+.width5{
+    width:5%;
+}
+.width12{
+    width:12%;
+}
+.welcome{
+    float: right;
+    margin-right: 3%;
+}
+.logout{
+    height: 50%;
+    position: relative;
+    top:50%;
+    left:43%;
+    display: inline-flex;
+    bottom:0;
+    width:20%;
+}
+.logout a{
+    color: white;
+    position: relative;
+    top: 50%;
+}
+.logout #txt{
+    color: white;
+    position: relative;
+    top: 50%;
+    margin-right: 10%;
+}
+
+/*style for user account*/
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+
+    display: none;
+    position: absolute;
+    background-color: #052b53;
+    color: #ffffff;
+    min-width: 50%;
+    z-index: 1;
+    right: 0;
+    margin-top:8%;
+
+}
+.dropdown-content li{
+    list-style: none;
+}
+.dropdown-content li:hover{
+    background-color: #c8cdcd;
+
+}
+.dropdown-content li a{
+    text-decoration: none;
+    color: #ffffff;
+}
+.dropdown-content li a:hover{
+    color: #1e2226;
+    background-color: #c8cdcd;
+}
+/* Links inside the dropdown */
+.dropdown-content a {
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+.user-name-header{
+    font-style: italic;
+    color: #ffffff;
+    font-size: 16px;
+    margin-right: 5%;
+    float: right;
+}
+.user-name-header a:hover{
+    color: #51575c;
+    text-decoration: none;
+}
+/*##########################################header css ends###########################*/
+/*main-content*/
+#wrapper{
+    min-height: 100%;
+}
+#page-content-wrapper{
+    /*padding-left: 1%;*/
+    width:100%;
+    min-height: 100%;
+    /*top:12%;*/
+    position: relative;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    /*padding-right: 15px;*/
+    background-color: #d5eaff;
+    /*height: auto;*/
+}
+.title-section-wrapper{
+    text-align: center;
+    background: #FFFFFF;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 10px;
+    overflow: auto;
+    box-shadow: 0 12px 18px rgba(0,0,0,0.12);
+}
+.section-wrapper{
+    background: #FFFFFF;
+    width: 99%;
+    float: right;
+    margin-right:1%;
+    margin-bottom: 20px;
+    padding: 15px;
+    overflow: auto;
+    box-shadow: 0 12px 18px rgba(0,0,0,0.12);
+
+}
+.no-left-margin{
+    margin-left: 0!important;
+}
+.no-pad{
+    padding:0;
+}
+.time{
+    height: 50px;
+    margin-bottom: 2%;
+    width:100%;
+    background: transparent;
+}
+.time-info{
+    margin-right: 2%;
+    display: inline-flex;
+    float: right;
+}
+.break-in{
+    background-color: #234a81;
+    position: relative;
+    color: white;
+    width: 150px;
+    height: 50px;
+    border-radius: 5px;
+    font-size: 18px;
+}
+.break-in:hover{
+    opacity: 0.8;
+}
+.punch-in{
+    background-color: #3c763d;
+    float: left;
+    color: white;
+    width: 150px;
+    height: 50px;
+    border-radius: 5px;
+    font-size: 18px;
+}
+.punch-in:hover{
+    opacity: 0.8;
+}
+
+.margin-left-5{
+    margin-left: 10%;
+}
+.punch-out{
+    float: right!important;
+    background-color: darkred;
+    z-index:5;
+    color: white;
+    width: 150px;
+    height: 50px;
+    border-radius: 5px;
+    font-size: 18px;
+}
+.punch-out:hover{
+    opacity: 0.8;
+}
+.search-form{
+    width:100%;
+    padding: 0 0 5px 15px;
+}
+td{
+    font-size: 15px!important;
+}
+tr{
+    text-align: center;
+    height:20px;
+
+}
+th{
+    text-align: center!important;
+    color: darkblue;
+    height: 30px;
+}
+.width10{
+    width:10%!important;
+}
+.width15{
+    width:15%!important;
+}
+.width30{
+    width:30%!important;
+}
+.width100{
+    width:100%;
+}
+.no-margin{
+    margin-left: 0;
+    margin-right: 0;
+}
+.bottom-mark{
+    border-bottom: 1px darkgrey solid;
+
+}
+.no-side-pad{
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+/*##############################footer css#############################################*/
+.footer{
+    width:100%;
+    height: auto;
+    margin: auto;
+    background: #1e2226;
+    padding: 20px 0px;
+    /*bottom:0;*/
+    position: relative;
+    clear: both;
+    z-index: 2;
+    color:grey;
+}
+.footer-social-icon{
+    width: 100%;
+    height: auto;
+    margin: auto;
+}
+.footer-social-icon ul{
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+}
+.footer-social-icon ul li{
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    margin: 0px 1px;
+}
+.footer-menu{
+    width: 100%;
+    height: auto;
+    margin: auto;
+}
+.width23{
+    width: 23.5%;
+}
+
+.font20{
+    font-size: 20px
+}
+
+.footer-menu ul{
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+}
+.footer-menu ul li{
+    color: #ffffff;
+    display: inline-block;
+    margin: 0px 5px 25px;
+}
+/*##############################footer css ends#############################################*/
