@@ -95,6 +95,7 @@
         selectMonth.value = parseInt(month)-1;
 
 
+        var today=parseInt(finalnepali[0]+finalnepali[1]+finalnepali[2]);
 
         // creating all cells
         var date = 1;
@@ -117,70 +118,27 @@
                     if (date == parseInt(finalnepali[2])  &&  year == parseInt(finalnepali[0]) && month == parseInt(finalnepali[1]) ) {
                         cell.classList.add("today");
                     } // color today's date
-                    var currentDate=null;
-                    var book=null;
-                    if (hall==1) {
-                        <?php
-                                if(isset($bookings1)){
-                            foreach ($bookings1 as $booking){
-//                                echo "console.log('".$booking['day']."')";
-                            echo "currentDate=\"" . $booking['day'] . "\";";
-                            echo "book=\"" . $booking['book'] . "\";";
-
-                            ?>
-
-                        if (currentDate == year + "-" + parseInt(month) + "-" + date) {
-                            if (book == 3) {
-                                cell.className += "taken";
-                            } else if (book == 2) {
-                                cell.className += "evening-taken";
-                            } else {
-                                cell.className += "morning-taken";
-                            }
-                        }
-                        <?php
-                        }
-                        }
-                        ?>
+                    var currentDate=parseInt(String(year)+String(month)+String(date));
+                    if ((currentDate-today)<=0){
+                        cell.onclick=function () {
+                            displayOldModel(thisDate+$(this).text());
+                        };
                     }else{
-                        <?php
-                                if (isset($bookings2)){
-                            foreach ($bookings2 as $booking){
-                            echo "currentDate=\"" . $booking['day'] . "\";";
-                            echo "book=\"" . $booking['book'] . "\";";
+                        cell.onclick=function () {
+                            displayModel(thisDate+$(this).text());
+                            // alert();
 
-                            ?>
-                        if (currentDate == year + "-" + parseInt(month) + "-" + date) {
-                            if (book == 3) {
-                                cell.className += "taken";
-                            } else if (book == 2) {
-                                cell.className += "evening-taken";
-                            } else {
-                                cell.className += "morning-taken";
-                            }
-                        }
-                        <?php
-                        }}
-                        ?>
+                        };
                     }
                     cell.appendChild(cellText);
                     var thisDate=year+"-"+parseInt(month)+"-";
-                    cell.onclick=function () {
-                        displayModel(thisDate+$(this).text());
-                        // alert();
 
-                    };
+
                     row.appendChild(cell);
                     date++;
-
                 }
-
             }
-
             tbl.appendChild(row); // appending each row into calendar body.
         }
-
     }
-
-
 </script>

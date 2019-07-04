@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Banquet;
+use App\Booking;
 use App\Capacity;
 use App\Count;
 use App\Event;
@@ -72,32 +73,32 @@ class PagesController extends Controller
             'count'=>$count->count
 
         );
-        for($i=1;$i<=$banquet['hall'];$i++){
-            $book=array();
-            $distinctDates=Event::where('hall','=',$i)->select('day')->distinct()->get();
-            foreach ($distinctDates as $distinctDate) {
-                $bookings = Event::where('day', '=', $distinctDate->day)->where('hall','=',$i)->get();
-                if (count($bookings) == 2) {
-                    $each['day'] = $distinctDate->day;
-                    $each['book'] = 3;
-                    array_push($book, $each);
-                } else {
-                    foreach ($bookings as $booking) {
-                        if ($booking->shift == "morning") {
-                            $each['day'] = $distinctDate->day;
-                            $each['book'] = 1;
-                            array_push($book, $each);
-                        } else {
-                            $each['day'] = $distinctDate->day;
-                            $each['book'] = 2;
-                            array_push($book, $each);
-                        }
-                    }
-                }
-            }
-            $array_name='bookings'.$i;
-            $data[$array_name]=$book;
-        }
+//        for($i=1;$i<=$banquet['hall'];$i++){
+//            $book=array();
+//            $distinctDates=Event::where('hall','=',$i)->select('day')->distinct()->get();
+//            foreach ($distinctDates as $distinctDate) {
+//                $bookings = Event::where('day', '=', $distinctDate->day)->where('hall','=',$i)->get();
+//                if (count($bookings) == 2) {
+//                    $each['day'] = $distinctDate->day;
+//                    $each['book'] = 3;
+//                    array_push($book, $each);
+//                } else {
+//                    foreach ($bookings as $booking) {
+//                        if ($booking->shift == "morning") {
+//                            $each['day'] = $distinctDate->day;
+//                            $each['book'] = 1;
+//                            array_push($book, $each);
+//                        } else {
+//                            $each['day'] = $distinctDate->day;
+//                            $each['book'] = 2;
+//                            array_push($book, $each);
+//                        }
+//                    }
+//                }
+//            }
+//            $array_name='bookings'.$i;
+//            $data[$array_name]=$book;
+//        }
         return view('banquet')->with($data);
     }
 
@@ -124,6 +125,59 @@ class PagesController extends Controller
             }
             echo $output;
         }
+    }
+
+    public function fetchaddress(Request $request){
+        if ($request->get('query')){
+            $query=$request->get('query');
+            if (strlen($query)>1) {
+                $data = Banquet::where('address', 'like', "%" . $query . "%")->select('address')->distinct()->get();
+                $addresses=array();
+                foreach ($data as $datum) {
+                    array_push($addresses,$datum->address);
+                }
+                $final_values=array();
+//                foreach ($addresses as $address) {
+//                    $values=preg_split(',',parse_str($address));
+//                    foreach ($values as $value){
+//                        if (strpos($value,$query)!=false){
+//                            array_push($final_values,$value);
+//                        }
+//                    }
+//                }
+                $output = "<ul>";
+                foreach ($addresses as $final_value) {
+                    $output .= "<li>" . $final_value . "</li>";
+                }
+                $output .= "</ul>";
+            }else{
+                $output="";
+            }
+            echo $output;
+        }
+    }
+
+    public function book(Request $request){
+//        echo "reached";
+        $this->validate($request,[
+            'name'=>'required',
+            'shift'=>'not_regex:/-/',
+            'contact'=>'required',
+        ],
+            ['not_regex'=>'The :attribute field cannot be empty']);
+        $book=new Booking();
+        $book->name=$request->input('name');
+        $book->shift=$request->input('shift');
+        $book->hall=$request->input('hall');
+        $book->date=$request->input('day');
+        $book->contact=$request->input('contact');
+        $book->address=$request->input('address');
+        $book->banquet=$request->input('banquet');
+        $book->expected_pax=$request->input('expected_pax');
+        $book->save();
+
+
+
     }
 }
 

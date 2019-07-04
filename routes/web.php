@@ -35,7 +35,7 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/{username}', 'PagesController@banquet');
+//Route::get('/{username}', 'PagesController@banquet');
 
 Route::get('/table', function () {
     return view('table');
@@ -45,7 +45,12 @@ Route::get('/banquet/{id}', 'PagesController@banquet');
 
 Route::get('/autocomplete/', 'PagesController@autocomplete');
 
+Route::post('/book/', 'PagesController@book');
+
+
 Route::post('/autocomplete/fetch','PagesController@fetch')->name('pages.fetch');
+Route::post('/autocomplete/fetchaddress','PagesController@fetchaddress')->name('pages.fetchaddress');
+
 
 Route::post('/banquet/check','BanquetsController@checkusername')->name('banquets.checkusername');
 

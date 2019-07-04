@@ -193,7 +193,7 @@
             <h4>Indreni Banquet</h4>
             <p>Baneshwor, Kathmandu</p>
             <div class="banquet-btn-container" >
-               <a href="/banquet/1"><button class="banquet-view-btn">Visit<i class="fa fa-chevron-right"></i> </button></a>
+                <a href="/banquet/1"><button class="banquet-view-btn">Visit<i class="fa fa-chevron-right"></i> </button></a>
             </div>
         </div>
         <div class="col-md-3 banquet-view">
