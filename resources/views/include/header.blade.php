@@ -7,6 +7,7 @@
 {{--    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">--}}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{asset('css/swiper.min.css')}}">
+    <link rel="stylesheet" href="{{asset('css/grid-gallery.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/lightbox.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/banquet-style.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -17,6 +18,7 @@
 
     <script src="{{asset('js/nepali.datepicker.v2.2.min.js')}}"></script>
     <script src="{{asset('js/swiper.min.js')}}"></script>
+    <script src="{{asset('js/grid-gallery.min.js')}}"></script>
     <script src="{{asset('js/lightbox-plus-jquery.min.js')}}"></script>
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
 
