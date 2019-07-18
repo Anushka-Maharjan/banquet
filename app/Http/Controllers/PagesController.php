@@ -12,6 +12,7 @@ use App\Photos;
 use App\UniqueView;
 use App\User;
 use Illuminate\Http\Request;
+use Intervention\Image\Facades\Image;
 
 class PagesController extends Controller
 {
@@ -103,7 +104,19 @@ class PagesController extends Controller
     }
 
     public function autocomplete(){
-        return view('autocomplete');
+        $values=explode(', ',"Bhakti Thapa Sadal, Baneshwor, Kathmandu");
+        $contains=strpos("Bhakti Thapa Sadal",'sad');
+        $data=[
+            'values'=>$values,
+            'contains'=>$contains
+        ];
+        return view('autocomplete')->with($data);
+//        $str = 'This is Main String';
+//        $substr = "Main";
+//
+//        if (strpos($str, $substr) !== false) {
+//            echo 'true';
+//        }
     }
 
     public function subdomain(){
@@ -115,9 +128,13 @@ class PagesController extends Controller
             $query=$request->get('query');
             if (strlen($query)>1) {
                 $data = Banquet::where('name', 'like', "%" . $query . "%")->get();
-                $output = "<ul>";
-                foreach ($data as $datum) {
-                    $output .= "<li>" . $datum->name . "</li>";
+                $output = "<ul  class=\"search-result\">";
+                if (count($data)>0) {
+                    foreach ($data as $datum) {
+                        $output .= "<li>" . $datum->name . "</li>";
+                    }
+                }else{
+                    $output .= "<li>No Result Found!!!</li>";
                 }
                 $output .= "</ul>";
             }else{
@@ -137,17 +154,25 @@ class PagesController extends Controller
                     array_push($addresses,$datum->address);
                 }
                 $final_values=array();
-//                foreach ($addresses as $address) {
-//                    $values=preg_split(',',parse_str($address));
-//                    foreach ($values as $value){
-//                        if (strpos($value,$query)!=false){
-//                            array_push($final_values,$value);
-//                        }
-//                    }
-//                }
-                $output = "<ul>";
-                foreach ($addresses as $final_value) {
+                foreach ($addresses as $address) {
+                    $values=explode(', ',$address);
+                    foreach ($values as $value){
+                        if (strpos(strtolower($value), strtolower($query)) !== false){
+                            array_push($final_values,$value);
+                        }
+                    }
+                }
+                $output = "<ul class='search-result-address'>";
+                $final_values=array_unique($final_values);
+                sort($final_values);
+                $i=0;
+                foreach ($final_values as $final_value) {
+                    if ($i>=10){
+                        break;
+                    }
                     $output .= "<li>" . $final_value . "</li>";
+                    $i++;
+
                 }
                 $output .= "</ul>";
             }else{
@@ -177,6 +202,16 @@ class PagesController extends Controller
         $book->save();
 
 
+
+    }
+
+    public function compressimage(){
+        $img = Image::make(public_path('uncompressed/img2.jpg'));
+        $img->encode('jpg',60);
+        $img->resize(1500,1000);
+        $img->save(public_path('/compressed/compressed2.jpg'));
+        return view('error');
+//        return $img->response('jpg');
 
     }
 }

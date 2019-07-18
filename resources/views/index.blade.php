@@ -128,7 +128,9 @@
         </div>
         <!-- slider end -->
         <div class="demo-cont__credits">
+
             <div class="demo-cont__credits-close"></div>
+
             <h2 class="demo-cont__credits-heading">Banquet Name</h2>
             <img src="//s3-us-west-2.amazonaws.com/s.cdpn.io/142996/profile/profile-512_5.jpg" alt="" class="demo-cont__credits-img" />
             <h3 class="demo-cont__credits-name">Location</h3>
@@ -155,18 +157,13 @@
 <div class="search-container anim-top">
     <h3 class="search-title">Looking for a Banquet? Search Here</h3>
     <div class="search-area ">
-        <input class="search-field left-curve" type="text" name="Search" placeholder="Search here..." >
-        <button class="search-btn right-curve" ><i class="fa fa-search"></i> </button>
+        <input class="search-field left-curve" type="text" name="banquet" id="banquet" placeholder="Search here..." >
+        <button class="search-btn right-curve" onclick="redirectbanquet()" ><i class="fa fa-search"></i> </button>
 
     </div>
     <div class="search-area-alt">
-        <input class="search-field-alt datepicker left-curve border-right" type="date" name="Search" placeholder="Search here...">
-        <select class="search-field-alt ">
-            <option value="0">Select location:</option>
-            <option value="1">Kupondole</option>
-            <option value="2">Teku</option>
-        </select>
-        <input class="search-field-alt border-left" type="number" name="Search" placeholder="Hall capacity(E.g: 500)">
+        <input class="search-field-alt left-curve border-right" type="text" name="address" id="address" placeholder="Location...">
+        <input class="search-field-alt border-left" type="number"  name="capacity" id="capacity" placeholder="Hall capacity(E.g: 500)">
         <button class="search-btn right-curve"><i class="fa fa-search"></i> </button>
 
     </div>
@@ -175,6 +172,9 @@
     </div>
     <div class="search-bottom-alt">
         <p onclick="initialSearch()"><i class="fa fa-arrow-left"></i> Go back</p>
+    </div>
+    <div class="banquet-list">
+
     </div>
 
 </div>
@@ -188,6 +188,7 @@
 
     </div>
     <div class="col-md-10" style="height: 100vh;">
+        <a href="/login/facebook">Login with faccebook</a>
         <div class="col-md-3 banquet-view">
             <img src="{{asset('images/banquet/b1.jpeg')}}" class="img-responsive">
             <h4>Indreni Banquet</h4>
@@ -534,6 +535,48 @@
 
         document.querySelector(".example-slider").classList.toggle("m--global-blending-active");
     });
+
+    $(document).ready(function () {
+        $('#banquet').keyup(function () {
+            var query=$(this).val();
+            if (query !=''){
+                var _token=$('input[name="_token"]').val();
+                $.ajax({
+                    url:"{{route('pages.fetch')}}",
+                    method:"POST",
+                    data:{query:query,_token:_token},
+                    success:function (data) {
+                        console.log("data::"+data);
+                        // $('#banquet_list').fadeIn();
+                        var div = document.getElementById('banquet_list');
+                        div.innerHTML = data;
+                    }
+                })
+            }
+        });
+        $('#address').keyup(function () {
+            var query=$(this).val();
+            if (query !=''){
+                var _token=$('input[name="_token"]').val();
+                $.ajax({
+                    url:"{{route('pages.fetchaddress')}}",
+                    method:"POST",
+                    data:{query:query,_token:_token},
+                    success:function (data) {
+                        console.log("data::"+data);
+                        // $('#banquet_list').fadeIn();
+                        var div = document.getElementById('address_list');
+                        div.innerHTML = data;
+                    }
+                })
+            }
+        });
+    })
+
+    function redirectbanquet() {
+        var query=document.getElementById('banquet_name').value;
+        window.location.href = '/new';
+    }
 </script>
 
 </body>

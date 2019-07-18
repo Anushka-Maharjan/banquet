@@ -46,6 +46,14 @@ Route::get('/banquet/{id}', 'PagesController@banquet');
 Route::get('/autocomplete/', 'PagesController@autocomplete');
 
 Route::post('/book/', 'PagesController@book');
+Route::get('/portfolio/', function (){
+    return view('portfolio');
+});
+
+Route::get('/edit-portfolio/', function (){
+    return view('editportfolio');
+});
+
 
 
 Route::post('/autocomplete/fetch','PagesController@fetch')->name('pages.fetch');
@@ -54,8 +62,10 @@ Route::post('/autocomplete/fetchaddress','PagesController@fetchaddress')->name('
 
 Route::post('/banquet/check','BanquetsController@checkusername')->name('banquets.checkusername');
 
+Route::get('login/{service}','SocialAuthController@redirect');
+Route::get ( '/login/{service}/callback', 'SocialAuthController@callback' );
 
-
+Route::get ( '/compress', 'PagesController@compressimage' );
 
 Route::get('admin/login','Auth\LoginController@showLoginFormAdmin');
 

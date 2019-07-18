@@ -1,11 +1,10 @@
 @include('include.header')
-<div id="ban-360" style="margin-top: 10%">
-    {{--<input type="text" name="banquet_name" id="banquet_name">--}}
-    {{--<div id="banquet_list">--}}
+<div id="ban-360" style="background-image: url('{{asset('images/CAMERA.jpg')}}')">
+    <script src="https://www.powr.io/powr.js?platform=html"></script><div class="powr-countdown-timer" id="6f8be033_1562566815"></div>    <div id="banquet_list">
 
-    {{--</div>--}}
-
-    <input type="text" name="address" style="margin: 5%" id="address">
+    </div>
+    Contains::{{$contains}}this<br>
+    <input type="text" name="address" style="margin-left: 5%;" id="address">
     <div id="address_list">
 
     </div>
@@ -47,5 +46,9 @@
                 })
             }
         });
+    })
+    $(document).on('click','li',function() {
+        console.log('clicked');
+        $('#address').val($(this).text());
     })
 </script>

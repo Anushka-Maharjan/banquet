@@ -1,1 +1,1 @@
-<h1>This is error ok?</h1>
+<img src="{{asset('compressed/compressed.jpg')}}" style="width: 100%; height: auto">

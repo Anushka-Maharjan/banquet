@@ -17,7 +17,7 @@ body {
   width:100%;
   height:3rem;
   background-image: linear-gradient(black, transparent);
-  position: fixed;
+  position: absolute;
   top:4rem;
   left:0;
   right:0;
@@ -406,7 +406,7 @@ body {
   border: none;
   /*border-radius: 5px;*/
   padding-left: 1rem ;
-  width:30%;
+  width:45%;
   margin-right: 0;
   height:100%;
   font-size: 1.4rem;
@@ -1364,4 +1364,217 @@ select{
 }
 .modal-dialog{
     height: auto;
+}
+/*################################portfolio css starts#########################################*/
+.nav-tabs{
+  padding-left:200px;
+  background: #3c1525;
+  color:white;
+  border-bottom: none;
+  box-shadow: 0 20px 28px rgba(2,0.5,0.5,0.5);
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover {
+  color: #3c1425;
+  cursor: default;
+  border-top:none;
+  border-right: none;
+  border-left:none;
+  border-bottom: 1px solid #909090;
+  background: linear-gradient(white, #909090);
+  /*border-bottom-color: transparent;*/
+}
+.nav-tabs a{
+  color:inherit;
+}
+.tab-pane{
+  padding:30px;
+}
+.tab-pane .col-md-3 p{
+  padding-bottom: 10px;
+  border-bottom: 1px solid lightgray;
+}
+/*.curve{*/
+/*width:100%;*/
+/*height:25%;*/
+/*!*background: url("images/curve.png");*!*/
+/*-webkit-background-size: cover;*/
+/*-moz-background-size: cover;*/
+/*-o-background-size: cover;*/
+/*background-size: cover;*/
+/*}*/
+/*.curve-op{*/
+/*width:100%;*/
+/*height:14vh;*/
+/*background: url("images/curve-op.png");*/
+/*-webkit-background-size: cover;*/
+/*-moz-background-size: cover;*/
+/*-o-background-size: cover;*/
+/*background-size: cover;*/
+/*}*/
+h4{
+  font-family: SignPainter;
+  font-size:25px;
+  color:maroon;
+}
+h3{
+  font-family: SignPainter;
+  font-size:30px
+}
+h5{
+  font-style: italic;
+  color: #5f0008;
+
+}
+.review-section h5{
+  font-style: normal;
+}
+.bio{
+  font-style: italic;
+  color: #959595;
+}
+#gg-screen{
+  background: rgba(0, 0, 0, 0.8);
+}
+.landscape-slide{
+  width: 100%;
+  height:60vh
+}
+.carousel-inner{
+  height:60vh;
+}
+.pg-enquire{
+  position:absolute;
+  right:2rem;
+  bottom:-7rem;
+  z-index:10;
+  width:auto
+}
+.pg-enquire button{
+  float:left;
+  width: 100px;
+  height:100px;
+  padding:4px;
+  color: #3c1425;
+  border-radius: 50px;
+  font-weight:bold;
+  border: 1px solid #d8c3b5;
+  background: #d8c3b5;
+}
+.pg-enquire button:hover{
+  background: #710000;
+  color:#d8c3b5;
+
+}
+.profile-img-container{
+  position:absolute;
+  bottom:-60px;
+  z-index:100;
+  left:0;
+  width:200px;
+  height:200px;
+}
+.profile-img-container img{
+  width:200px;
+  height:200px;
+  border-radius: 100px;
+  border:5px solid white;
+}
+.p-detail{
+  height:fit-content;
+  width:100%;
+}
+.event-space{
+  background: linear-gradient( transparent,#4f92dc,transparent);
+  margin-top: 40px
+}
+.event-space img{
+  width:400px;
+  height:250px;
+}
+.gallery-space{
+  padding-left: 30px;
+  padding-right:30px;
+  background-image:url('images/booking-bg.jpg');
+  margin-top: 40px;
+}
+.video-space{
+  width:100%;
+  padding-right: 0;
+  padding-left: 0;
+  margin-top:40px;
+}
+.promo-video{
+  position: relative;
+  width:100%;
+  height:50rem;
+}
+.checked{
+  color: orange!important;
+}
+.fa-star{
+  font-size: 3rem;
+  color:#b1b1b1;
+}
+.ratings {
+  position: relative;
+  vertical-align: middle;
+  display: inline-block;
+  color: #b1b1b1;
+  overflow: hidden;
+}
+
+.full-stars{
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  color: orange;
+}
+
+.empty-stars:before,
+.full-stars:before {
+  content: "\2605\2605\2605\2605\2605";
+  font-size: 3rem;
+}
+
+.empty-stars:before {
+  -webkit-text-stroke: 1px #b1b1b1;
+}
+
+.full-stars:before {
+  -webkit-text-stroke: 1px orange;
+}
+.full-stars-usr{
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  color: orange;
+}
+
+.empty-stars-usr:before,
+.full-stars-usr:before {
+  content: "\2605\2605\2605\2605\2605";
+  font-size: 10px;
+}
+
+.empty-stars-usr:before {
+  -webkit-text-stroke: 1px #b1b1b1;
+}
+
+.full-stars-usr:before {
+  -webkit-text-stroke: 1px orange;
+}
+.modal{
+  overflow: auto;
+}
+.container-contact100 input{
+  height:auto;
+}
+/*################################portfolio css ends#########################################*/
+
+.width70{
+  width:70% !important;
 }

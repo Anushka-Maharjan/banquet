@@ -6,6 +6,7 @@ use App\Banquet;
 use App\Photos;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 
 class PhotosController extends Controller
 {
@@ -50,7 +51,6 @@ class PhotosController extends Controller
         $this->validate($request, [
 //            'photos' => 'required'
         ]);
-        echo "reached";
         $id=Banquet::where('user_id','=',Auth::id())->first();
         if ($request->hasFile('photos')) {
             $files = $request->file('photos');
@@ -60,12 +60,26 @@ class PhotosController extends Controller
                 $extension=$file->getClientOriginalExtension();
                 $filenameToStore=$filename."_".time().".".$extension;
 
-                $path=$file->storeAs('public/banquet/',$filenameToStore);
+                $img = Image::make($file);
+                $img->backup();
+                $width = $img->width();
+                $height = $img->height();
+                $img->encode('jpg',10);
+                $scale=$width/1200;
+                $scale_thumbnail=$width/500;
+                $img->resize($width/$scale,$height/$scale);
+                $img->save(public_path('storage\banquet\\'.$filenameToStore));
+
+                $img->reset();
+                $img->resize($width/$scale_thumbnail,$height/$scale_thumbnail);
+                $img->save(public_path('storage\banquet\thumbnail\\'.$filenameToStore));
+
+//                $path=$file->storeAs('public/banquet/',$filenameToStore);
                 $upload_file="storage/banquet/".$filenameToStore;
-                $photos=new Photos();
-                $photos->photo=$upload_file;
-                $photos->banquet_id=$id['id'];
-                $photos->save();
+//                $photos=new Photos();
+//                $photos->photo=$upload_file;
+//                $photos->banquet_id=$id['id'];
+//                $photos->save();
             }
 
         }
