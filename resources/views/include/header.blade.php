@@ -38,7 +38,11 @@
 
 <body>
 <div class="upper-menu">
-    <p><a href="/"><i class="fa fa-home"></i> Home</a> <i class="fa fa-phone"></i> +977 9860 897369</p>
+    <p class="col-md-6 col-md-offset-6">
+        <a onclick="loginmodal()" class="border-right-white"> Login</a >
+        <a style="padding-left: 1%">Register</a>
+    </p>
+
 </div>
 <div class="menu">
 
@@ -46,3 +50,48 @@
         <li></li>
     </ul>
 </div>
+<div class="modal fade" id="login-modal" role="dialog">
+    <div class="modal-dialog width35" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                        <button type="button" class="close" data-dismiss="modal" onclick="displayDivs()">&times;</button>
+                </div>
+            </div>
+            <div class="modal-body" style="height: auto">
+                <div class="login-reg log" >
+                    <div style="height: 2rem; padding: 0">
+                        <p class="text-right"> Not a member yet? <a href="register.php">Register</a> </p>
+                    </div>
+
+
+                    <div class="bg-gray">
+                        <form action="#">
+                            <label for="contact">Phone Number</label>
+                            <input type="number" id="contact" name="contact" placeholder="Your number.." required>
+
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" placeholder="Your password.." required>
+
+                            <input type="submit" value="Login">
+                        </form>
+                        <h3 class="text-center font-gray">Or</h3>
+                        <a href="{{url('login/facebook')}}"><button class="loginFb"><i class="fa fa-facebook"></i> Login with Facebook</button></a>
+                        <a href="{{url('login/google')}}"> <button class="loginGm"><i class="fa fa-google"></i> Login with Google</button></a>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+ function loginmodal() {
+     $('#login-modal').modal({show: true});
+
+ }
+</script>
+
+

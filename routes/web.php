@@ -49,6 +49,9 @@ Route::post('/book/', 'PagesController@book');
 Route::get('/portfolio/', function (){
     return view('portfolio');
 });
+Route::get('/photoindex',function (){
+    return view('photohome');
+});
 
 Route::get('/edit-portfolio/', function (){
     return view('editportfolio');
