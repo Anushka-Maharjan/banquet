@@ -6,16 +6,45 @@ use App\Banquet;
 use App\Booking;
 use App\Capacity;
 use App\Count;
+use App\Enquiry;
 use App\Event;
+use App\Mail\EnquiryEmail;
 use App\IP;
+use App\Photographers;
 use App\Photos;
 use App\UniqueView;
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Intervention\Image\Facades\Image;
 
 class PagesController extends Controller
 {
+    public function enquire(Request $request){
+        $query = new Enquiry();
+        $query->name = $request->input('name');
+        $query->contact = $request->input('contact');
+        $query->address = $request->input('address');
+        $query->event = $request->input('event');
+        $query->duration = $request->input('duration');
+        $query->time = $request->input('time');
+        $query->date = $request->input('date');
+        $query->photographer_id = $request->input('id');
+        $query->save();
+
+        $photographer = Photographers::where('id','=',$query->photographer_id)->first();
+        Mail::to('example@example.com')->send(new EnquiryEmail($query,$photographer) );
+
+        return back();
+    }
+
+    public function portfolio($username){
+        $split = explode('-',$username);
+        $id = $split[2];
+        $photographer = Photographers::where('id','=',$id)->first();
+        return view('portfolio')->with('photographer',$photographer);
+    }
+
     public function banquet($username){
         if ($username=='www'){
             return view('index');
