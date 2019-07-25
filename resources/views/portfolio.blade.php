@@ -36,11 +36,7 @@
             <span class="icon-next"></span>
         </a>
         <div class="pg-enquire" >
-            @if (\Illuminate\Support\Facades\Auth::check())
-                <button>Enquire</button>
-            @else
-                <button>Not log</button>
-            @endif
+            <button onclick="displaymodel('enquire')">Enquire</button>
         </div>
         <div class="profile-img-container">
             <a href="images/man.jpg" data-lightbox="profile"><img src="images/man.jpg" class="img-responsive" ></a>
@@ -215,9 +211,10 @@
 </div>
 <div class="container video-space">
 
-    <h3 class="text-center">Promo Video </h3><button onclick="editVideo()">Edit Video</button>
+    <h3 class="text-center">Promo Video </h3>
+    <button style="float: right" onclick="displaymodel('video')"><i class="fa fa-pencil-square-o" ></i> Edit Video</button>
 
-    <iframe class="promo-video" src="https://www.youtube.com/embed/lx9UPNzOXg8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe class="promo-video" src="https://www.youtube.com/embed/{{$photographer['url']}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 </div>
 
@@ -389,5 +386,13 @@
             }
         }
     });
-
+    $(document).ready(function(){
+        $('input[type="radio"]').change(function(){
+            if($(this).val() == 'Hourly'){
+               $('#time').show('slow') ;
+            }else {
+                $('#time').hide('slow');
+            }
+        });
+    });
 </script>
