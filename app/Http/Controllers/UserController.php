@@ -2,14 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\VerifyEmail;
 use App\Photographer;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 class UserController extends Controller
 {
+    public function userverify($id){
+        $user=User::where('id','=',$id)->first();
+        $user->verified = 1;
+        $user->save();
+        return redirect('/photoindex');
+    }
+
     public function adminverify(Request $request)
     {
         $contact=$request->contact;
@@ -45,12 +54,17 @@ class UserController extends Controller
             $user->name = $request->input('name');
             $user->email = $request->input('email');
             $user->contact = $request->input('contact');
-            $user->verified = 1;
+            $user->verified = 0;
             $user->role = 'photo';
             $user->password = Hash::make($request->input('password'));
             $user->save();
+            Mail::to($user->email)->send(new VerifyEmail($user));
 
             $photographer=new Photographer();
+            $photographer->user_id=$user->id;
+            $photographer->contact=$user->contact;
+            $photographer->name=$user->name;
+            $photographer->save();
             return redirect('/register-success');
         }else{
             return redirect()->back()->with('danger','email already exists');

@@ -27,12 +27,19 @@ Route::get('/banquet/{id}', 'PagesController@banquet');
 Route::get('/autocomplete/', 'PagesController@autocomplete');
 
 Route::post('/book/', 'PagesController@book');
+
+Route::post('/portfolio/enquire','PagesController@enquire');
+Route::get('/portfolio/{username}','PagesController@portfolio');
+Route::post('/portfolio/','PagesController@video');
+
 Route::get('/photoindex',function (){
     return view('photohome');
 });
 Route::get('/portfolio/{username}','PagesController@portfolio');
 Route::post('/autocomplete/fetch','PagesController@fetch')->name('pages.fetch');
 Route::post('/autocomplete/fetchaddress','PagesController@fetchaddress')->name('pages.fetchaddress');
+
+
 Route::post('/banquet/check','BanquetsController@checkusername')->name('banquets.checkusername');
 
 Route::get('login/{service}','SocialAuthController@redirect');
@@ -45,11 +52,9 @@ Route::get ( '/register-success', function (){
 Route::get('admin/login','Auth\LoginController@showLoginFormAdmin');
 
 Route::post('photo/register','UserController@photoregister');
-Route::post('photo/enquire','PagesController@enquire');
+
 
 Route::post('admin/login','UserController@adminverify');
-Route::post('user/login','UserController@userlogin');
-
 
 Route::get('admin/register','UserController@showAdminRegister');
 
