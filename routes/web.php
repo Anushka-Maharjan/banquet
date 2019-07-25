@@ -46,12 +46,15 @@ Route::get('/banquet/{id}', 'PagesController@banquet');
 Route::get('/autocomplete/', 'PagesController@autocomplete');
 
 Route::post('/book/', 'PagesController@book');
-Route::get('/portfolio/', function (){
-    return view('portfolio');
-});
+
+Route::post('/portfolio/enquire','PagesController@enquire');
+Route::get('/portfolio/{username}','PagesController@portfolio');
+Route::post('/portfolio/','PagesController@video');
+
 Route::get('/photoindex',function (){
     return view('photohome');
 });
+
 
 Route::get('/edit-portfolio/', function (){
     return view('editportfolio');
@@ -98,7 +101,7 @@ Route::group(['middleware' => ['auth','admin']], function() {
     Route::resource('admin/profile','BanquetsController');
 
 });
-
+Route::get('/verify/{id}','UserController@userverify');
 
 Auth::routes( ['verify' => true]);
 

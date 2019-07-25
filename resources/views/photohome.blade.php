@@ -1,6 +1,9 @@
 @include('include.header')
 <div class="top-banner"  >
 
+    <div style="display: none" id="verified" class="alert alert-success">
+       You are verified. Please Login
+    </div>
     <div class="photo-search-container">
         <div class="photo-search">
             <p class="photo-search-title">Find Your Photographer!!</p>
@@ -21,6 +24,7 @@
             <button class="bePartner-btn">Be Our Partner <i class="fa fa-thumbs-up"></i> </button>
 
         </div>
+
         <div class="photographer-reg">
             <p class="photo-reg-title">Become Our Partner &</p>
             <p class="photo-reg-title"> Let The Clients Find You </p>
@@ -86,6 +90,12 @@
 </div>
 
 <script>
+
+    if( window.location.href.indexOf('#verified')>0){
+        $('#verified').show();
+    }
+
+
     $(".bePartner-btn").click(function () {
         $(".photo-search").removeClass("show").addClass("hide ");
         $(".photographer-reg").addClass("anim-fade-in show ");
