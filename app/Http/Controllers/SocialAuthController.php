@@ -3,22 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use Laravel\Socialite\Facades\Socialite;
-
 class SocialAuthController extends Controller
 {
     public function redirect($service) {
-
+//        Session::put('url',url()->previous());
+        session(['url'=>url()->previous()]);
+//        Session::save();
+//        echo url()->previous();
+//        echo session('url');
         return Socialite::driver( $service )->redirect ();
     }
 
     public function callback($service) {
         $userSocial = Socialite::driver($service)->stateless()->user();
-        $user=User::where('email','=',$userSocial->email)->get();
+        $user=User::where('email','=',$userSocial->email)->first();
         if (count($user)==0){
             $user=new User();
             $user->name=$userSocial->name;
@@ -36,10 +39,7 @@ class SocialAuthController extends Controller
             }
             $user->save();
         }
-
-//        Session::get('url');
-//        return redirect($this->redirectPath());
-//        return back();
-//        return view ( 'home' )->withDetails ( $user )->withService ( $service );
+        Auth::attempt(['email'=>$userSocial->email,'password'=>'user123','verified'=>1]);
+        return redirect(url('portfolio') );
     }
 }

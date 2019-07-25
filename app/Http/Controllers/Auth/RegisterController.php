@@ -82,7 +82,7 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
         $mailusers=User::where('email','=',$request->input('email'))->get();
-        if ($mailusers==null) {
+        if (count($mailusers)==0) {
             $user = new User();
             $user->name = $request->input('name');
             $user->email = $request->input('email');
@@ -96,7 +96,7 @@ class RegisterController extends Controller
             $banquet->name = $request->input('banquet_name');
             $banquet->user_id = $user->id;
             $banquet->save();
-            return redirect('login')->with('success','successfully registered');
+            return redirect('/register-success');
         }else{
             return redirect('login')->with('danger','email already exists');
         }

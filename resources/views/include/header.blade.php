@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title></title>
-{{--    <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">--}}
-{{--    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">--}}
+    {{--    <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">--}}
+    {{--    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">--}}
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{asset('css/swiper.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/grid-gallery.min.css')}}">
@@ -39,8 +39,12 @@
 <body>
 <div class="upper-menu">
     <p class="col-md-6 col-md-offset-6">
-        <a onclick="loginmodal()" class="border-right-white"> Login</a >
-        <a style="padding-left: 1%">Register</a>
+        @if (\Illuminate\Support\Facades\Auth::check())
+            <a href="logout">Logout</a>
+        @else
+            <a onclick="loginmodal()" class="border-right-white"> Login</a >
+            <a style="padding-left: 1%">Register</a>
+        @endif
     </p>
 
 </div>
@@ -55,7 +59,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="row">
-                        <button type="button" class="close" data-dismiss="modal" onclick="displayDivs()">&times;</button>
+                    <button type="button" class="close" data-dismiss="modal" onclick="displayDivs()">&times;</button>
                 </div>
             </div>
             <div class="modal-body" style="height: auto">
@@ -63,8 +67,6 @@
                     <div style="height: 2rem; padding: 0">
                         <p class="text-right"> Not a member yet? <a href="register.php">Register</a> </p>
                     </div>
-
-
                     <div class="bg-gray">
                         <form action="#">
                             <label for="contact">Phone Number</label>
@@ -88,10 +90,9 @@
     </div>
 </div>
 <script>
- function loginmodal() {
-     $('#login-modal').modal({show: true});
-
- }
+    function loginmodal() {
+        $('#login-modal').modal({show: true});
+    }
 </script>
 
 

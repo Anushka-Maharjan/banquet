@@ -69,14 +69,20 @@ Route::get('login/{service}','SocialAuthController@redirect');
 Route::get ( '/login/{service}/callback', 'SocialAuthController@callback' );
 
 Route::get ( '/compress', 'PagesController@compressimage' );
-
+Route::get ( '/register-success', function (){
+    return view('successregister');
+});
 Route::get('admin/login','Auth\LoginController@showLoginFormAdmin');
+
+Route::post('photo/register','UserController@photoregister');
+
 
 Route::post('admin/login','UserController@adminverify');
 
 Route::get('admin/register','UserController@showAdminRegister');
 
 Route::get('admin/logout','UserController@adminlogout');
+Route::get('logout','UserController@userlogout');
 
 Route::group(['middleware' => ['auth','admin']], function() {
     Route::resource('admin/photos','PhotosController');

@@ -36,7 +36,11 @@
             <span class="icon-next"></span>
         </a>
         <div class="pg-enquire" >
-            <button>Enquire</button>
+            @if (\Illuminate\Support\Facades\Auth::check())
+                <button>Enquire</button>
+            @else
+                <button>Not log</button>
+            @endif
         </div>
         <div class="profile-img-container">
             <a href="images/man.jpg" data-lightbox="profile"><img src="images/man.jpg" class="img-responsive" ></a>

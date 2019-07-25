@@ -153,7 +153,7 @@ return [
     |
     */
 
-    'domain' => env('SESSION_DOMAIN', 'basicwebsite.com.np'),
+    'domain' => env('SESSION_DOMAIN', ''),
 
     /*
     |--------------------------------------------------------------------------

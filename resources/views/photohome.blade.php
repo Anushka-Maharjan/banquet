@@ -24,13 +24,16 @@
         <div class="photographer-reg">
             <p class="photo-reg-title">Become Our Partner &</p>
             <p class="photo-reg-title"> Let The Clients Find You </p>
-
-            <input type="text" placeholder="Your Name" class="photographer-name">
-            <input type="text" placeholder="Your Location" class="location">
-            <input type="text" placeholder="Your Contact Number" class="photographer-contact">
-            <input type="email" placeholder="Your Email" class="photographer-email">
+            {!! Form::open(['action'=>'UserController@photoregister','method'=>'POST','enctype'=>'multipart/form-data']) !!}
+            @csrf
+            <input type="text" placeholder="Name" class="location" name="name" required>
+            <input type="text" placeholder="Contact" class="photographer-contact" name="contact" required>
+            <input type="email" placeholder="Your Email" class="photographer-email" name="email" required>
+            <input type="password" placeholder="Password" class="location" name="password" required>
+            <input type="password" placeholder="Confirm Password" class="photographer-contact" required>
 
             <button class="photographer-reg-btn">Get Started</button>
+            {!! Form::close() !!}
             <button class="pho-back-btn"><i class="fa fa-arrow-left"></i> Back</button>
 
 
