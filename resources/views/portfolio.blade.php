@@ -74,7 +74,7 @@
                             This is my bio. I am my bio. We are our bio. Loreum Ipsum is my bro.</p>
                         <p><b>Facebook:</b><a href="https://www.facebook.com/sayalvaidya"> https://www.facebook.com/sayalvaidya</a></p>
                         <p><b>Instagram:</b><a href="https://www.instagram.com/sayalvaidya/"> https://www.instagram.com/sayalvaidya</a></p>
-                        <button style="float: right" onclick="displaymodel()"><i class="fa fa-pencil-square-o" ></i> Edit Profile</button>
+                        <button style="float: right" onclick="displaymodel('edit')"><i class="fa fa-pencil-square-o" ></i> Edit Profile</button>
                     </div>
                 </div>
 
@@ -306,15 +306,89 @@
     </div>
 </div>
 
+<div class="modal fade" id="myEnquiryModal" role="dialog">
+    <div class="modal-dialog width70" >
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-sm-11">
+                        <h3>Edit Profile</h3>
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="button" class="close" data-dismiss="modal" onclick="displayDivs()">&times;</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body" style="height: auto">
+                <div class="container-contact100">
+                    <div class="wrap-contact100">
+                        <form class="contact100-form validate-form" action="{{action('PagesController@enquire')}}" method="post">
+                            @csrf
+                            <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Enter Your Name">
+                                <span class="label-input100">Name</span>
+                                <input class="input100" type="text" name="name" placeholder="Enter Your Name ">
+                            </div>
+
+                            <div class="wrap-input100 bg1 rs1-wrap-input100" data-validate = "Enter Address">
+                                <span class="label-input100">Address</span>
+                                <input class="input100" type="text" name="address" placeholder="Enter Address">
+                            </div>
+                            <div class="wrap-input100 bg1 rs1-wrap-input100" data-validate = "Enter Contact Number">
+                                <span class="label-input100">Contact Number</span>
+                                <input class="input100" type="text" name="contact" placeholder="Enter Contact Number">
+                            </div>
+                            <div class="wrap-input100 bg1 rs1-wrap-input100" data-validate = "Enter Event">
+                                <span class="label-input100">Event</span>
+                                <input class="input100" type="text" name="event" placeholder="Enter Event">
+                            </div>
+                            <div class="wrap-input100 bg1 rs1-wrap-input100" >
+                                <span class="label-input100">Date</span>
+                                <input class="input100" type="date" name="date">
+                            </div>
+                            <div class="wrap-input100 bg1 rs1-wrap-input100">
+                                <span class="label-input100 ">Duration</span>
+                                <div class="form-group">
+                                    <input type="radio" name="duration" value="allDay"> All Day<br>
+                                    <input type="radio" name="duration" value="Hourly"> Hourly<br>
+                                    <input id="time" style="display: none" type="time" name="time">
+                                </div>
+                            </div>
+
+                            <input type="hidden" name="id" value="{{$photographer->id}}">
+                            <div class="container-contact100-form-btn">
+                                <button class="contact100-form-btn">
+						<span>
+							Submit
+							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+						</span>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
 
 <script src="style/js/grid-gallery.min.js"></script>
 
 <script>
 
-    function displaymodel() {
+    function displaymodel(type) {
         // console.log('reached');
         $('body').css("overflow",'hidden');
-        $('#myModal').modal({show: true});
+        if (type == 'enquire'){
+            $('#myEnquiryModal').modal({show:true});
+        }else if (type =='video') {
+            $('#myVideoModal').modal({show: true});
+        }else {
+            $('#myModal').modal({show: true});
+        }
     }
     
     function displayDivs() {
