@@ -45,7 +45,8 @@ class PagesController extends Controller
         $user=User::where('id','=',$photographer->user_id)->first();
         $result=[
             'photographer'=>$photographer,
-            'configured'=>$user->logged_in
+            'configured'=>1
+//            'configured'=>$user->logged_in
         ];
         return view('portfolio')->with('result',$result);
     }

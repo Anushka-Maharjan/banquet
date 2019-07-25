@@ -32,32 +32,32 @@
             <div id="home" class="tab-pane fade in active" >
                 <div class="row">
                     @if ($result['configured']==1)
-                    <div class="col-md-3">
-                        <h4>Name</h4>
-                        <p >Sayal Baidya</p><br>
-                        <h4>Address</h4>
-                        <p >Kupondole, Kathmandu</p><br>
-                    </div>
-                    <div class="col-md-3">
-                        <h4>Experience</h4>
-                        <p >Pro ho dai</p><br>
-                        <h4>Genre</h4>
-                        <p>Sab kuch</p><br>
-                    </div>
-                    <div class="col-md-6 ">
-                        <h4>Bio</h4>
-                        <p class="bio">This is my bio. I am my bio. We are our bio. Loreum Ipsum is my bro.
-                            This is my bio. I am my bio. We are our bio. Loreum Ipsum is my bro.
-                            This is my bio. I am my bio. We are our bio. Loreum Ipsum is my bro.</p>
-                        <p><b>Facebook:</b><a href="https://www.facebook.com/sayalvaidya"> https://www.facebook.com/sayalvaidya</a></p>
-                        <p><b>Instagram:</b><a href="https://www.instagram.com/sayalvaidya/"> https://www.instagram.com/sayalvaidya</a></p>
-                        @if (\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->role=='photo')
-                            <button style="float: right" onclick="displaymodel('edit')"><i class="fa fa-pencil-square-o" ></i> Edit Profile</button>
-                        @endif
-                    </div>
+                        <div class="col-md-3">
+                            <h4>Name</h4>
+                            <p >Sayal Baidya</p><br>
+                            <h4>Address</h4>
+                            <p >Kupondole, Kathmandu</p><br>
+                        </div>
+                        <div class="col-md-3">
+                            <h4>Experience</h4>
+                            <p >Pro ho dai</p><br>
+                            <h4>Genre</h4>
+                            <p>Sab kuch</p><br>
+                        </div>
+                        <div class="col-md-6 ">
+                            <h4>Bio</h4>
+                            <p class="bio">This is my bio. I am my bio. We are our bio. Loreum Ipsum is my bro.
+                                This is my bio. I am my bio. We are our bio. Loreum Ipsum is my bro.
+                                This is my bio. I am my bio. We are our bio. Loreum Ipsum is my bro.</p>
+                            <p><b>Facebook:</b><a href="https://www.facebook.com/sayalvaidya"> https://www.facebook.com/sayalvaidya</a></p>
+                            <p><b>Instagram:</b><a href="https://www.instagram.com/sayalvaidya/"> https://www.instagram.com/sayalvaidya</a></p>
+                            @if (\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->role=='photo')
+                                <button style="float: right" onclick="displaymodel('edit')"><i class="fa fa-pencil-square-o" ></i> Edit Profile</button>
+                            @endif
+                        </div>
                     @else
-                        @if (\Illuminate\Support\Facades\Auth::id()==$result['photographer']->user_id)
-                            <a href>Configure Profile</a>
+                        @if (\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::id()==$result['photographer']->user_id)
+                            <a href="">Configure Profile</a>
                         @endif
                     @endif
                 </div>
