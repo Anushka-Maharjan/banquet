@@ -3,43 +3,19 @@
 
 <div class="landscape-slide">
     <div class="carousel slide" id="carousel" data-ride ="carousel">
-        <ol class="carousel-indicators">
-            <li class="active" data-slide-to="0" data-target="#carousel"></li>
-            <li data-slide-to="1" data-target="#carousel"></li>
-            <li data-slide-to="2" data-target="#carousel"></li>
-        </ol>
         <div class="carousel-inner">
             <div class="item active" id ="slide0">
                 <div >
-                    <a href="images/banquet1.jpg" data-lightbox="promo"><img src="images/banquet1.jpg" class="img-responsive" ></a>
+                    <a href="{{asset('images/banner.jpg')}}" data-lightbox="promo"><img src="{{asset('images/banner.jpg')}}" class="img-responsive" ></a>
                 </div>
             </div>
-
-            <div class="item" id ="slide1">
-                <div >
-                    <a href="images/banquet2.jpg" data-lightbox="promo"> <img src="images/banquet2.jpg" class="img-responsive" ></a>
-                </div>
-            </div>
-
-            <div class="item" id ="slide2">
-                <div >
-                    <a href="images/banquet2.jpg" data-lightbox="promo"><img src="images/banquet2.jpg" class="img-responsive" ></a>
-                </div>
-            </div>
-
 
         </div>
-        <a class="left carousel-control" href="#carousel" data-slide="prev" role="button">
-            <span class="icon-prev"></span>
-        </a>
-        <a class="right carousel-control" href="#carousel" data-slide="next" role="button">
-            <span class="icon-next"></span>
-        </a>
         <div class="pg-enquire" >
             <button onclick="displaymodel('enquire')">Enquire</button>
         </div>
         <div class="profile-img-container">
-            <a href="images/man.jpg" data-lightbox="profile"><img src="images/man.jpg" class="img-responsive" ></a>
+            <a href="{{asset('images/dummy.png')}}" data-lightbox="profile"><img src="{{asset('images/dummy.png')}}" class="img-responsive" ></a>
         </div>
     </div>
 
@@ -55,6 +31,7 @@
         <div class="tab-content">
             <div id="home" class="tab-pane fade in active" >
                 <div class="row">
+                    @if ($result['configured']==1)
                     <div class="col-md-3">
                         <h4>Name</h4>
                         <p >Sayal Baidya</p><br>
@@ -74,8 +51,15 @@
                             This is my bio. I am my bio. We are our bio. Loreum Ipsum is my bro.</p>
                         <p><b>Facebook:</b><a href="https://www.facebook.com/sayalvaidya"> https://www.facebook.com/sayalvaidya</a></p>
                         <p><b>Instagram:</b><a href="https://www.instagram.com/sayalvaidya/"> https://www.instagram.com/sayalvaidya</a></p>
-                        <button style="float: right" onclick="displaymodel('edit')"><i class="fa fa-pencil-square-o" ></i> Edit Profile</button>
+                        @if (\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->role=='photo')
+                            <button style="float: right" onclick="displaymodel('edit')"><i class="fa fa-pencil-square-o" ></i> Edit Profile</button>
+                        @endif
                     </div>
+                    @else
+                        @if (\Illuminate\Support\Facades\Auth::id()==$result['photographer']->user_id)
+                            <a href>Configure Profile</a>
+                        @endif
+                    @endif
                 </div>
 
             </div>
@@ -210,11 +194,10 @@
     </div>
 </div>
 <div class="container video-space">
-
-    <h3 class="text-center">Promo Video </h3>
-    <button style="float: right" onclick="displaymodel('video')"><i class="fa fa-pencil-square-o" ></i> Edit Video</button>
-
-    <iframe class="promo-video" src="https://www.youtube.com/embed/{{$photographer['url']}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    @if (\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->role=='photo')
+        <h3 class="text-center">Promo Video </h3><button onclick="editVideo()">Edit Video</button>
+    @endif
+    <iframe class="promo-video" src="https://www.youtube.com/embed/lx9UPNzOXg8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 </div>
 
@@ -350,13 +333,17 @@
                             <div class="wrap-input100 bg1 rs1-wrap-input100">
                                 <span class="label-input100 ">Duration</span>
                                 <div class="form-group">
-                                    <input type="radio" name="duration" value="allDay"> All Day<br>
-                                    <input type="radio" name="duration" value="Hourly"> Hourly<br>
-                                    <input id="time" style="display: none" type="time" name="time">
+                                    <input type="radio" name="duration" value="allDay"> All Day
+                                    <input type="radio" name="duration" value="Hourly" style="margin-left: 20%"> Hourly
+                                    <div id="time" style="display: none">
+                                        <input type="time" name="start_time">
+                                        <label style="margin:0 5% 0 5%">to</label>
+                                        <input type="time" name="end_time">
+                                    </div>
                                 </div>
                             </div>
 
-                            <input type="hidden" name="id" value="{{$photographer->id}}">
+                            <input type="hidden" name="id" value="1">
                             <div class="container-contact100-form-btn">
                                 <button class="contact100-form-btn">
 						<span>
@@ -380,15 +367,23 @@
 <script>
 
     function displaymodel(type) {
-        // console.log('reached');
         $('body').css("overflow",'hidden');
-        if (type == 'enquire'){
-            $('#myEnquiryModal').modal({show:true});
-        }else if (type =='video') {
-            $('#myVideoModal').modal({show: true});
-        }else {
-            $('#myModal').modal({show: true});
-        }
+        @if (\Illuminate\Support\Facades\Auth::check())
+            if (type == 'enquire'){
+                @if(\Illuminate\Support\Facades\Auth::user()->role=='user')
+                    $('#myEnquiryModal').modal({show:true});
+                @else
+                    $('#login-modal').modal({show: true});
+                @endif
+            }else if (type =='video') {
+                $('#myVideoModal').modal({show: true});
+            }else {
+                $('#myModal').modal({show: true});
+            }
+        @else
+            $('#login-modal').modal({show: true});
+        @endif
+
     }
     
     function displayDivs() {

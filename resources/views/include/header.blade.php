@@ -68,15 +68,15 @@
                         <p class="text-right"> Not a member yet? <a href="register.php">Register</a> </p>
                     </div>
                     <div class="bg-gray">
-                        <form action="#">
-                            <label for="contact">Phone Number</label>
-                            <input type="number" id="contact" name="contact" placeholder="Your number.." required>
+                        {!! Form::open(['action'=>'UserController@userlogin','method'=>'POST','enctype'=>'multipart/form-data']) !!}
+                            <label for="contact">Email</label>
+                            <input type="email" id="contact" name="email" placeholder="Your email.." required>
 
                             <label for="password">Password</label>
                             <input type="password" id="password" name="password" placeholder="Your password.." required>
 
                             <input type="submit" value="Login">
-                        </form>
+                        {!! Form::close() !!}
                         <h3 class="text-center font-gray">Or</h3>
                         <a href="{{url('login/facebook')}}"><button class="loginFb"><i class="fa fa-facebook"></i> Login with Facebook</button></a>
                         <a href="{{url('login/google')}}"> <button class="loginGm"><i class="fa fa-google"></i> Login with Google</button></a>

@@ -11,19 +11,6 @@
 |
 */
 
-
-//Route::domain('{account}.' . env('APP_URL', 'basicwebsite.com.np'))->group(function () {
-//    Route::get('/', function ($account) {
-//        return $account;
-//    });
-//});
-
-//Route::domain('{account}.basicwebsite.com.np')->group(function () {
-//    Route::get('/', function ($account) {
-//       return $account;
-//    });
-//});
-
 Route::group(['domain' => '{subdomain}.basicwebsite.com.np'], function() {
         Route::get('/', function ($subdomain) {
        return $subdomain;
@@ -35,34 +22,17 @@ Route::get('/', function () {
     return view('index');
 });
 
-//Route::get('/{username}', 'PagesController@banquet');
-
-Route::get('/table', function () {
-    return view('table');
-});
-
 Route::get('/banquet/{id}', 'PagesController@banquet');
 
 Route::get('/autocomplete/', 'PagesController@autocomplete');
 
 Route::post('/book/', 'PagesController@book');
-Route::get('/portfolio/', function (){
-    return view('portfolio');
-});
 Route::get('/photoindex',function (){
     return view('photohome');
 });
-
-Route::get('/edit-portfolio/', function (){
-    return view('editportfolio');
-});
-
-
-
+Route::get('/portfolio/{username}','PagesController@portfolio');
 Route::post('/autocomplete/fetch','PagesController@fetch')->name('pages.fetch');
 Route::post('/autocomplete/fetchaddress','PagesController@fetchaddress')->name('pages.fetchaddress');
-
-
 Route::post('/banquet/check','BanquetsController@checkusername')->name('banquets.checkusername');
 
 Route::get('login/{service}','SocialAuthController@redirect');
@@ -75,9 +45,11 @@ Route::get ( '/register-success', function (){
 Route::get('admin/login','Auth\LoginController@showLoginFormAdmin');
 
 Route::post('photo/register','UserController@photoregister');
-
+Route::post('photo/enquire','PagesController@enquire');
 
 Route::post('admin/login','UserController@adminverify');
+Route::post('user/login','UserController@userlogin');
+
 
 Route::get('admin/register','UserController@showAdminRegister');
 

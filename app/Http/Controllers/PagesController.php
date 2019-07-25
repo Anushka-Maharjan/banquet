@@ -10,7 +10,7 @@ use App\Enquiry;
 use App\Event;
 use App\Mail\EnquiryEmail;
 use App\IP;
-use App\Photographers;
+use App\Photographer;
 use App\Photos;
 use App\UniqueView;
 use App\User;
@@ -41,8 +41,13 @@ class PagesController extends Controller
     public function portfolio($username){
         $split = explode('-',$username);
         $id = $split[2];
-        $photographer = Photographers::where('id','=',$id)->first();
-        return view('portfolio')->with('photographer',$photographer);
+        $photographer = Photographer::where('id','=',$id)->first();
+        $user=User::where('id','=',$photographer->user_id)->first();
+        $result=[
+            'photographer'=>$photographer,
+            'configured'=>$user->logged_in
+        ];
+        return view('portfolio')->with('result',$result);
     }
 
     public function banquet($username){

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Photographer;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -48,6 +49,8 @@ class UserController extends Controller
             $user->role = 'photo';
             $user->password = Hash::make($request->input('password'));
             $user->save();
+
+            $photographer=new Photographer();
             return redirect('/register-success');
         }else{
             return redirect()->back()->with('danger','email already exists');
@@ -63,4 +66,18 @@ class UserController extends Controller
         return back();
     }
 
+    public function userlogin(Request $request){
+        $this->validate($request,[
+            'email'=>'required',
+            'password'=>'required'
+        ]);
+        if(Auth::attempt(['email'=>$request->input('email'),'password'=>$request->input('password'),'verified'=>1])) {
+//            if('role'==1){
+//
+//            }
+            return redirect()->back();
+        }else{
+            return "Username or password incorrect";
+        }
+    }
 }
