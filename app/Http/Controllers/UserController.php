@@ -16,7 +16,7 @@ class UserController extends Controller
         $user=User::where('id','=',$id)->first();
         $user->verified = 1;
         $user->save();
-        return redirect('/photoindex');
+        return redirect('/photoindex#verified');
     }
 
     public function adminverify(Request $request)
@@ -69,6 +69,13 @@ class UserController extends Controller
         }else{
             return redirect()->back()->with('danger','email already exists');
         }
+    }
+
+    public function configure(Request $request){
+            $photographer = Photographer::where('id','=',$request->input('id'))->first();
+            $photographer->name = $request->input('name');
+            $photographer->contact= $request->input('contact');
+            $photographer->address = $request->input('address');
     }
 
     public function adminlogout(){

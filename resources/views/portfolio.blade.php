@@ -57,7 +57,7 @@
                         </div>
                     @else
                         @if (\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::id()==$result['photographer']->user_id)
-                            <a href="">Configure Profile</a>
+                            <a onclick=" displaymodel('edit')">Configure Profile</a>
                         @endif
                     @endif
                 </div>
@@ -209,7 +209,7 @@
             <div class="modal-header">
                 <div class="row">
                     <div class="col-sm-11">
-                        <h3>Edit Profile</h3>
+                        <h3>Configure Profile</h3>
                     </div>
                     <div class="col-sm-1">
                         <button type="button" class="close" data-dismiss="modal" onclick="displayDivs()">&times;</button>
@@ -219,23 +219,24 @@
             <div class="modal-body" style="height: auto">
                 <div class="container-contact100">
                     <div class="wrap-contact100">
-                        <form class="contact100-form validate-form">
-
+                        <form class="contact100-form validate-form" method="post" action="{{action('UserController@configure')}}">
+                            @csrf
+                            <input type="hidden" value="{{$result['photographer']->id}}">
                             <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Enter Your Name">
                                 <span class="label-input100">Name *</span>
-                                <input class="input100" type="text" name="email" placeholder="Enter Your Name ">
+                                <input class="input100" type="text" name="name" placeholder="{{$result['photographer']->name}}">
                             </div>
 
                             <div class="wrap-input100 bg1 rs1-wrap-input100" data-validate = "Enter Address">
                                 <span class="label-input100">Address</span>
-                                <input class="input100" type="text" name="phone" placeholder="Enter Address">
+                                <input class="input100" type="text" name="address" placeholder="Enter Address">
                             </div>
                                 <div class="wrap-input100 bg1 rs1-wrap-input100">
                                     <span class="label-input100 ">Experience</span>
                                     <div class="form-group">
-                                        <input type="radio" name="gender" value="male"> Entrant<br>
-                                        <input type="radio" name="gender" value="female"> Skilled<br>
-                                        <input type="radio" name="gender" value="other"> Professional
+                                        <input type="radio" name="experience" value="Entrant"> Entrant<br>
+                                        <input type="radio" name="experience" value="Skiller"> Skilled<br>
+                                        <input type="radio" name="experience" value="Progessional"> Professional
                                     </div>
                                 </div>
                                 <div class="wrap-input100 bg1 rs1-wrap-input100">
@@ -260,7 +261,7 @@
                             {{--</div>--}}
                             <div class="wrap-input100 validate-input bg0 rs1-alert-validate" data-validate = "Please Type Your Bio">
                                 <span class="label-input100">Bio</span>
-                                <textarea class="input100" name="message" placeholder="Write your bio"></textarea>
+                                <textarea class="input100" name="bio" placeholder="Enter Your Bio"></textarea>
                             </div>
                             <div class="wrap-input100 validate-input bg0 rs1-alert-validate" data-validate = "Please Type Your Bio">
                                 <span class="label-input100">Bio</span>

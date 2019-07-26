@@ -32,7 +32,7 @@ class PagesController extends Controller
         $query->photographer_id = $request->input('id');
         $query->save();
 
-        $photographer = Photographers::where('id','=',$query->photographer_id)->first();
+        $photographer = Photographer::where('id','=',$query->photographer_id)->first();
         Mail::to('example@example.com')->send(new EnquiryEmail($query,$photographer) );
 
         return back();
@@ -45,7 +45,7 @@ class PagesController extends Controller
         $user=User::where('id','=',$photographer->user_id)->first();
         $result=[
             'photographer'=>$photographer,
-            'configured'=>1
+            'configured'=>0
 //            'configured'=>$user->logged_in
         ];
         return view('portfolio')->with('result',$result);
