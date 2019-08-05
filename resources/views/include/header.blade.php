@@ -43,7 +43,7 @@
             <a href="logout">Logout</a>
         @else
             <a onclick="loginmodal()" class="border-right-white"> Login</a >
-            <a style="padding-left: 1%">Register</a>
+            <a onclick="registermodal()" style="padding-left: 1%">Register</a>
         @endif
     </p>
 
@@ -89,9 +89,132 @@
 
     </div>
 </div>
+<div class="modal fade" id="reg-modal" role="dialog">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <button type="button" class="close" data-dismiss="modal" onclick="displayDivs()">&times;</button>
+                </div>
+            </div>
+            <div class="modal-body" style="height: auto">
+                <div class="login-reg reg">
+                    <div style="height: 2rem; padding: 0">
+                        <p class="col-md-6 text-left"> Welcome to Website Name!</p>
+                        <p class="col-md-6 text-right"> Already a member?<a href="login.php">Login</a> </p>
+                    </div>
+
+
+                    <div class="bg-gray">
+                        <form action="{{action('UserController@userregister')}}" method="post">
+                            @csrf
+                            <span class="col-md-6">
+                            <label for="fname">Full Name</label>
+                            <input type="text" id="fname" name="fname" placeholder="Your full name.." required>
+                            </span>
+                            <span class="col-md-6">
+                            <label for="contact">Phone Number</label>
+                            <input type="number" id="contact" name="contact" placeholder="Your number.." required>
+                            </span>
+                            <div class="col-md-12">
+                            <label for="contact">Email</label>
+                            <input type="email" id="contact" name="email" placeholder="Your email.." >
+                            </div>
+                            <span class="col-md-6">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" placeholder="Your password.." required>
+                            </span>
+                                <span class="col-md-6">
+                            <label for="password">Confirm Password</label>
+                            <input type="password" id="password" name="password_confirmation" placeholder="Your password.." required>
+                                </span>
+                            <input type="submit" value="Register">
+                        </form>
+                        <div style="width: 100%; height: 12rem; padding: 20px; text-align: center">
+                            <p>If you want to register your banquet, click below</p>
+                            <button onclick="registerbanqmodal()" class="banq-reg-btn">Register Your Banquet</button></>
+                        </div>
+{{--                        <h3 class="text-center font-gray">Or</h3>--}}
+{{--                        <a href="{{url('login/facebook')}}"><button class="loginFb"><i class="fa fa-facebook"></i> Login with Facebook</button></a>--}}
+{{--                        <a href="{{url('login/google')}}"> <button class="loginGm"><i class="fa fa-google"></i> Login with Google</button></a>--}}
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<div class="modal fade" id="reg-banq-modal" role="dialog">
+    <div class="modal-dialog" >
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <button type="button" class="close" data-dismiss="modal" onclick="displayDivs()">&times;</button>
+                </div>
+            </div>
+            <div class="modal-body" style="height: auto">
+                <div class="login-reg reg">
+                    <div style="height: 2rem; padding: 0">
+                        <p class="col-md-6 text-left"> Welcome to Website Name!</p>
+                        <p class="col-md-6 text-right"> Already a member?<a href="login.php">Login</a> </p>
+                    </div>
+
+
+                    <div class="bg-gray">
+                        <form action="{{action('Auth\RegisterController@register')}}" method="post">
+                            @csrf
+                            <span class="col-md-6">
+                            <label for="fname">Full Name</label>
+                            <input type="text" id="fname" name="name" placeholder="Your full name.." required>
+                            </span>
+                            <span class="col-md-6">
+                            <label for="contact">Phone Number</label>
+                            <input type="number" id="contact" name="contact" placeholder="Your number.." required>
+                            </span>
+                            <div class="col-md-12">
+                                <label for="contact">Email</label>
+                                <input type="email" id="contact" name="email" placeholder="Your email.." >
+                            </div>
+                            <div class="col-md-12">
+                                <label for="contact">Banquet Name</label>
+                                <input type="text" id="banquet_name" name="banquet_name" placeholder="Banquet Name" >
+                            </div>
+                            <span class="col-md-6">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" name="password" placeholder="Your password.." required>
+                            </span>
+                            <span class="col-md-6">
+                            <label for="password">Confirm Password</label>
+                            <input type="password" id="password" name="password_confirmation" placeholder="Your password.." required>
+                                </span>
+                            <input type="submit" value="Register">
+                        </form>
+                        <div style="width: 100%; height: 12rem; padding: 20px; text-align: center">
+                            <p>If you want to register your banquet, click below</p>
+                            <button onclick="registerbanqmodal()" class="banq-reg-btn">Register Your Banquet</button></>
+                    </div>
+                    {{--                        <h3 class="text-center font-gray">Or</h3>--}}
+                    {{--                        <a href="{{url('login/facebook')}}"><button class="loginFb"><i class="fa fa-facebook"></i> Login with Facebook</button></a>--}}
+                    {{--                        <a href="{{url('login/google')}}"> <button class="loginGm"><i class="fa fa-google"></i> Login with Google</button></a>--}}
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
 <script>
     function loginmodal() {
         $('#login-modal').modal({show: true});
+    }
+    function registermodal() {
+        $('#reg-modal').modal({show:true});
+    }
+    function registerbanqmodal(){
+        $('#reg-modal').modal('hide');
+        $('#reg-banq-modal').modal({show:true});
     }
 </script>
 

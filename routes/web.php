@@ -27,7 +27,9 @@ Route::get('/banquet/{id}', 'PagesController@banquet');
 Route::get('/autocomplete/', 'PagesController@autocomplete');
 
 Route::post('/book/', 'PagesController@book');
-
+Route::post('user/login','UserController@userlogin');
+Route::post('user/register','UserController@userregister');
+Route::get('/verify/{id}','UserController@userverify');
 Route::post('/portfolio/enquire','PagesController@enquire');
 Route::get('/portfolio/{username}','PagesController@portfolio');
 Route::post('/portfolio/','PagesController@video');
@@ -35,12 +37,13 @@ Route::post('/portfolio/','PagesController@video');
 Route::get('/photoindex',function (){
     return view('photohome');
 });
+Route::post('/config','UserController@configure');
 Route::get('/portfolio/{username}','PagesController@portfolio');
 Route::post('/autocomplete/fetch','PagesController@fetch')->name('pages.fetch');
 Route::post('/autocomplete/fetchaddress','PagesController@fetchaddress')->name('pages.fetchaddress');
 
-
 Route::post('/banquet/check','BanquetsController@checkusername')->name('banquets.checkusername');
+//Route::post('/register','RegisterController@register');
 
 Route::get('login/{service}','SocialAuthController@redirect');
 Route::get ( '/login/{service}/callback', 'SocialAuthController@callback' );

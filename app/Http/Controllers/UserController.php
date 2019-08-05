@@ -101,4 +101,29 @@ class UserController extends Controller
             return "Username or password incorrect";
         }
     }
+
+    public function userregister(Request $request){
+        $this->validate($request,[
+            'fname'=>'required',
+            'contact'=>'required',
+            'email'=>'required',
+            'password'=>'required|confirmed|min:6'
+        ]);
+        $mailusers=User::where('email','=',$request->input('email'))->get();
+        if (count($mailusers)==0) {
+
+            $user = new User();
+            $user->name = $request->input('fname');
+            $user->email = $request->input('email');
+            $user->contact = $request->input('contact');
+            $user->verified = 0;
+            $user->role = 'user';
+            $user->password = Hash::make($request->input('password'));
+            $user->save();
+            Mail::to($user->email)->send(new VerifyEmail($user));
+            return view('successregister');
+        }else{
+            return redirect()->back()->with('danger','email already exists');
+        }
+    }
 }

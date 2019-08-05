@@ -1,5 +1,6 @@
 @include('include.header')
 
+<link rel="stylesheet" type="text/css" href="{{asset('css/owl.carousel.min.css')}}">
 <style>
     .main-banner{
         width:100%;

@@ -3,11 +3,13 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Banquet;
+use App\Mail\VerifyEmail;
 use App\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -80,6 +82,7 @@ class RegisterController extends Controller
 
     public function register(Request $request)
     {
+//        return "hello";
         $this->validator($request->all())->validate();
         $mailusers=User::where('email','=',$request->input('email'))->get();
         if (count($mailusers)==0) {
@@ -91,7 +94,9 @@ class RegisterController extends Controller
             $user->role = 'banquet';
             $user->password = Hash::make($request->input('password'));
             $user->save();
-
+            Mail::to($user->email)->send(
+                new VerifyEmail($user)
+            );
             $banquet = new Banquet();
             $banquet->name = $request->input('banquet_name');
             $banquet->user_id = $user->id;
