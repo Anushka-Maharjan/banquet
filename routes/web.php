@@ -11,9 +11,9 @@
 |
 */
 
-Route::group(['domain' => '{username}.nepvent.com'], function() {
-    Route::get('/', 'PagesController@banquet');
-});
+//Route::group(['domain' => '{username}.nepvent.com'], function() {
+//    Route::get('/', 'PagesController@banquet');
+//});
 
 
 Route::get('/', function () {
@@ -23,6 +23,7 @@ Route::get('/', function () {
 Route::get('/error', function () {
     return view('error');
 });
+Route::get('/photohome','PagesController@banquet');
 Route::get('/banquet/{id}', 'PagesController@banquet');
 Route::post('/book/', 'PagesController@book');
 Route::post('user/login','UserController@userlogin');
