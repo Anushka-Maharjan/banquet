@@ -66,7 +66,7 @@ class BanquetsController extends Controller
             'logo'=>'required',
             'pricing'=>'required',
             'menu'=>'required',
-            'banner'=>'required'
+            'photos'=>'required'
         ]);
         $banquet=Banquet::where('user_id','=',Auth::id())->first();
         $banquet->username=$request->input('username');
@@ -87,13 +87,13 @@ class BanquetsController extends Controller
             $banquet->logo="";
         }
 
-        if ($request->hasFile('banner')){
-            $filenameWithExt=$request->file('banner')->getClientOriginalName();
+        if ($request->hasFile('photos')){
+            $filenameWithExt=$request->file('photos')->getClientOriginalName();
             $filename=pathinfo($filenameWithExt,PATHINFO_FILENAME);
-            $extension=$request->file('banner')->getClientOriginalExtension();
+            $extension=$request->file('photos')->getClientOriginalExtension();
             $filenameToStore=$filename."_".time().".".$extension;
 
-            $path=$request->file('banner')->storeAs('public/banquet/',$filenameToStore);
+            $path=$request->file('photos')->storeAs('public/banquet/',$filenameToStore);
             $banner="storage/banquet/".$filenameToStore;
         }else{
             $banner="";

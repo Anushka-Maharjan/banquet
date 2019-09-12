@@ -13,6 +13,24 @@ body {
   /*transform: translate3d(0px, 0px, 0px);*/
   /*transition: all 700ms ease;*/
 }
+.nepvent-logo{
+    width: 10rem;
+    left: 0;
+    height: 3.9rem;
+    position: absolute;
+    top: 0;
+}
+.head-link{
+    float:right;
+    width:90%;
+}
+.modal{
+    background-color:rgba(0,0,0,0.6);
+}
+.modal-opt{
+    height: 2rem;
+    padding: 0
+}
 /*#############################################header css starts #############################################*/
 .menu{
   width:100%;
@@ -124,9 +142,22 @@ body {
   background-color: #45a049;
 }
 .login-reg div {
-  border-radius: 5px;
-  padding: 20px 20px 0 20px;
-  width:100%;
+  /*border-radius: 5px;*/
+  /*padding: 20px 20px 0 20px;*/
+  /*width:100%;*/
+}
+.mod-border-right{
+    border-right:1px dashed gray;
+}
+.margin0{
+   margin:0; 
+}
+#reg-modal .modal-dialog{
+    width:800px;
+}
+#reg-modal .col-md-5, #reg-modal .col-md-6, #reg-modal .col-md-7{
+    padding-right:5px;
+    padding-left:5px;
 }
 .bg-gray{
   background-color: #f2f2f2;
@@ -139,7 +170,7 @@ body {
   text-align: right;
 }
 .banq-reg-btn{
-  width:59%;
+  width:100%;
   background-color: #bebcb9;
   color: white;
   font-weight: bold;
@@ -246,6 +277,388 @@ body {
 }
 /*#############################################ALternate header css ends #############################################*/
 
+
+/*#############################################Index page css starts#############################################s*/
+.main-banner{
+    width:100%;
+    height:60rem;
+    position: relative;
+    top:0;
+    left:0;
+    background-image: url("http://photo.nepvent.com/images/nepvent-home.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+.home-search-container{
+    padding:10px;
+    position: relative;
+    transform: translate(-50%,-50%);
+    left:50%;
+    top:50%;
+    width:80rem;
+    height:10rem;
+    background: rgba(255,255,255,0.8);
+    border-radius: 5px;
+}
+.text-left{
+    text-align:left;
+}
+.index-search-field input{
+    width:100%;
+    height:4rem;
+    padding-left: 10px;
+    /*border-right: 3px solid lightgray;*/
+    border: 1px solid transparent;
+    border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+
+    outline: none;
+
+}
+.home-search-container .col-md-4, .home-search-container .row{
+    padding: 0;
+    margin:0;
+}
+.search-contains{
+    width:90%;
+    float: left;
+    display: inline-block;
+}
+.search-contains p{
+    margin-bottom: 0;
+    font-family: fantasy;
+    font-size: 2rem;
+    color: gray;
+}
+.index-search{
+    margin-top: 2.8rem;
+    width:100%;
+    height:4rem;
+}
+.index-search-btn{
+    width:10%;
+    height:100%;
+    border: none;
+    color:white;
+    background: #2391bb;
+}
+.comma{
+    position:absolute;
+    left:-55px;
+    width:60px;
+    height:60px;
+    z-index:10;
+    top:-34rem;
+    opacity:0.8;
+}
+.comma-right{
+    position:absolute;
+    right:-55px;
+    width:60px;
+    height:60px;
+    z-index:10;
+    top:-34rem;
+    opacity:0.8;
+}
+/*the container must be positioned relative:*/
+.custom-select {
+    width:100%;
+    height:4rem;
+    position: relative;
+    border-right: 2px solid #f4f4f2;
+    font-family: Arial;
+}
+
+.custom-select select {
+    display: none; /*hide original SELECT element:*/
+}
+
+.select-selected {
+    background-color: #ffffff;
+}
+
+/*style the arrow inside the select element:*/
+.select-selected:after {
+    position: absolute;
+    content: "";
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: black transparent transparent transparent;
+}
+
+/*point the arrow upwards when the select box is open (active):*/
+.select-selected.select-arrow-active:after {
+    border-color: transparent transparent black transparent;
+    top: 7px;
+}
+
+/*style the items (options), including the selected item:*/
+.select-items div,.select-selected {
+    color: black;
+    height:4rem;
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
+    cursor: pointer;
+    user-select: none;
+}
+
+/*style items (options):*/
+.select-items {
+    position: absolute;
+    background-color: white;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height:16rem;
+    overflow: auto;
+    z-index: 99;
+}
+
+/*hide the items when the select box is closed:*/
+.select-hide {
+    display: none;
+}
+
+.select-items div:hover, .same-as-selected {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.anim-fade-in{
+    animation: fadeIn 2s 1;
+}
+@-webkit-keyframes fadeIn {
+    0%{opacity:0;}
+    100%{opacity: 1;}
+}
+.bounce{
+    -webkit-animation: bouncer 2s ease-out;
+    -moz-animation: bouncer 2000ms ease-out;
+    -o-animation: bouncer 2000ms ease-out;
+    animation: bouncer 2s ease-out;
+    animation-delay: 2s;
+}
+@-webkit-keyframes bouncer {
+
+    0% {
+        -webkit-transform:translateY(-100%);
+    }
+    5% {
+        -webkit-transform:translateY(-60%);
+    }
+    15% {
+        -webkit-transform:translateY(0);
+    }
+    20% {
+        -webkit-transform:translateY(-60%);
+    }
+    25% {
+        -webkit-transform:translateY(0%);
+    }
+    30% {
+        -webkit-transform:translateY(-50%);
+    }
+    35% {
+        -webkit-transform:translateY(0%);
+    }
+    40% {
+        -webkit-transform:translateY(-40%);
+    }
+    45% {
+        -webkit-transform:translateY(0%);
+    }
+    50% {
+        -webkit-transform:translateY(-30%);
+    }
+    55% {
+        -webkit-transform:translateY(0%);
+    }
+    60% {
+        -webkit-transform:translateY(-10%);
+    }
+    65% {
+        -webkit-transform:translateY(0%);
+    }
+    70% {
+        -webkit-transform:translateY(-5%);
+    }
+    75% {
+        -webkit-transform:translateY(0);
+    }
+    80% {
+        -webkit-transform:translateY(-1%);
+    }
+    85% {
+        -webkit-transform:translateY(0);
+    }
+    90% {
+        -webkit-transform:translateY(-1%);
+    }
+    95% {
+        -webkit-transform:translateY(0);
+    }
+    100% {
+        -webkit-transform:translateY(0);
+    }
+}
+.banquet-ad{
+    padding: 15px;
+    position: relative;
+    height:40rem;
+    width:100%;
+    margin: 20px 0 0 0;
+    background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,0.7)), url('images/banquet1.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.nepvent-desc{
+    min-height: auto;
+    width:100%;
+    margin: 50px 0 20px 0;
+    padding: 0 20px 0 20px;
+}
+.nepvent-desc p{
+    font-size: 16px;
+    line-height: 1.7;
+    text-align: center;
+}
+.nepvent-desc h3{
+    font-weight: bold;
+}
+.ptr-container{
+    background-color: #eaedfe;
+    padding:10px;
+    border: none;
+    border-radius: 10px;
+    width:100%;
+    height:auto;
+    box-shadow: 0 10px 15px rgba(0,0,0,0.4);
+}
+.ptr-container input{
+    padding-left: 10px;
+    width:100%;
+    height:4rem;
+    border: none;
+    margin-bottom: 20px;
+
+}
+.ptr-container p{
+    margin-bottom: 0;
+    text-align: left;
+}
+.confirm-btn{
+    margin-top: 10px;
+    width:100%;
+    height:5rem;
+    background: #8191f1;
+    color:white;
+    font-weight: bold;
+    /*font-size: 18px;*/
+    border-radius: 3px;
+}
+.ad-slider{
+    border-radius: 5px;
+    padding: 15px 15px 15px 15px;
+    position: absolute;
+    width:60rem;
+    height:30rem;
+    background-color: rgba(0,0,0,0.7);
+    transform: translate(-50%,-50%);
+    top:50%;
+
+}
+.ad-right{
+    left:70%;
+
+}
+.owl-carousel{
+    height:100%;
+}
+.owl-carousel .item{
+    height:100%
+}
+.owl-carousel .item img{
+    height:90%;
+    object-fit: cover;
+}
+.text-white{
+    color:white;
+}
+.banquet-ad-txt{
+    font-family: Papyrus, Herculanum, Party LET, Curlz MT, Harrington, fantasy;
+    position: relative;
+    float: left;
+    width:40%;
+    height:auto;
+    font-weight: bolder;
+}
+.banquet-ad-txt p, .pho-ad-txt p{
+    font-size: 18px;
+}
+.pho-ad{
+    padding: 15px;
+    position: relative;
+    height:40rem;
+    width:100%;
+    margin: 0 0 20px 0;
+    background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,0.7)), url('http://nepvent.com/images/support/pho1.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.pho-ad-txt{
+    font-family: Papyrus, Herculanum, Party LET, Curlz MT, Harrington, fantasy;
+    position: relative;
+    float: right;
+    width:40%;
+    height:auto;
+    font-weight: bolder;
+    z-index:12;
+}
+.ad-left{
+    left:30%;
+}
+.border{
+    z-index: 5;
+    width: 100%;
+    height:10rem;
+    background-image: url("http://nepvent.com/images/support/border.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: absolute;
+    bottom:-40px;
+    left:0;
+    opacity:0.8;
+}
+.owl-item{
+    height:100%;
+}
+.owl-carousel{
+        height:100%;
+}
+.owl-carousel .item{
+        height:100%
+}
+.owl-carousel .item img{
+        height:90%;
+        object-fit: cover;
+}
+.owl-carousel .owl-stage-outer{
+  height:100%;  
+}
+.owl-carousel .owl-stage{
+    height:100%;
+}
+.mb-show{
+    display:none;
+}
+
+/*#############################################Index page css ends#############################################s*/
 
 
 /*#############################################banquet browse(index page) css starts#############################################*/
@@ -1447,6 +1860,147 @@ body {
   /*background: transparent;*/
   /*color: wheat;*/
 }
+/*#############################################search result css starts#############################################*/
+    .result{
+        position: relative;
+        transform: translate(-50%,-50%);
+        left: 45%;
+        width: 99%;
+    }
+    
+    .result .search-area,.result .search-area-alt{
+        position:relative;
+        transform: translate(-50%,0);
+        width: 90%;
+         background: none;
+        outline: none;
+
+    }
+    .result .search-area-alt{
+        width:90%;
+    }
+    .result .search-bottom, .result .search-bottom-alt{
+        position: absolute;
+        left: 100%;
+        top: 3.3rem;
+        text-align: center;
+        width: 14rem;
+        height: 6.5rem;
+        padding: 12px;
+        outline: none;
+
+    }
+    .search-bottom button{
+        padding: 2%;
+        background: #7b7b7b;
+        border:none;
+        border-radius:5px;
+        outline: none;
+        width:100%;
+    }
+    .result button{
+        height:100%;
+    }
+    .search-bottom .col-md-5,.search-bottom .col-md-7{
+        padding-left: 0;
+        padding-right: 0;
+    }
+    .search-bottom p{
+        margin-top: 4%;
+        margin-bottom: 0;
+    }
+    .result .search-btn{
+        background: #13834e;
+    }
+    .search-field, .search-field-alt{
+        outline: none;
+    }
+    .showing-result p{
+        color: #c5c5c5;
+        font-style: italic;
+        margin-right: 10px;
+        border-right: 1px solid lightgray;
+        padding-right: 10px;
+    }
+    .showing-result .r1{
+        border-bottom: 1px solid lightgray;
+        padding-bottom: 10px;
+    }
+
+    .showing-result .col-md-3,.showing-result .col-md-4,.showing-result .col-md-5,.showing-result .col-md-6,.showing-result .col-md-8,.showing-result .col-md-9,.showing-result .col-md-10{
+        position:unset;
+    }
+
+    .search-result{
+    position:absolute;
+    top:13rem;
+    background:white;
+    color:grey;
+    list-style:none;
+    width:69.6%;
+    /*text-align:center;*/
+    left: 46.3%;
+    transform: translate(-50%,0);
+    border-radius:4px;
+    
+}
+.search-result li{
+    border-bottom: 1px solid #efeeeb;
+    padding:5px;
+}
+.search-result li:hover{
+    background:lightyellow;
+}
+.search-result-address li:hover{
+    background:lightyellow;
+}
+
+.search-result-address{
+    position:absolute;
+    top:13rem;
+    background:white;
+    color:grey;
+    list-style:none;
+    width:43%;
+    /*text-align:center;*/
+    left: 23.5%;
+    transform: translate(-50%,0);
+}
+.p-search-res .search-result-address{
+    background: aliceblue;
+    z-index:10;
+    top: 11rem;
+    width: 25.5%;
+    left: 34px;
+    transform: none;
+    max-height:25rem;
+    overflow-y:auto;
+    
+}
+.p-search-res .search-result-address li{
+    padding:10px;
+    border-bottom: 1px solid lightgray;
+}
+
+
+.result .search-result{
+        top: 5.5rem;
+        width: 79%;
+        left: 45.6%;
+ 
+    }
+    
+    .result .search-result-address{
+        top: 5.5rem;
+        width: 39.2%;
+        left: 25.8%;
+        z-index:5;
+ 
+    }
+    /*#############################################search result css ends#############################################*/
+    
+    
+    
 
 /*#############################################sCalendar css Ends#############################################s*/
 input, select{
@@ -1521,12 +2075,12 @@ select{
 /*background-size: cover;*/
 /*}*/
 h4{
-  font-family: SignPainter;
+  font-family: Caflisch Script, Adobe Poetica, Sanvito, Ex Ponto, Snell Roundhand, Zapf-Chancery;
   font-size:25px;
   color:maroon;
 }
 h3{
-  font-family: SignPainter;
+  font-family: Caflisch Script, Adobe Poetica, Sanvito, Ex Ponto, Snell Roundhand, Zapf-Chancery;
   font-size:30px
 }
 h5{
@@ -1582,7 +2136,7 @@ h5{
   width:200px;
   height:200px;
 }
-.profile-img-container img{
+.profile-img-container .pp{
   width:200px;
   height:200px;
   border-radius: 100px;
@@ -1686,6 +2240,9 @@ h5{
 
 .width70{
   width:70% !important;
+}
+.width30{
+  width:30%;
 }
 
 /*#############################################Footer css Starts#############################################s*/
@@ -1834,7 +2391,7 @@ h5{
 }
 .location, .photographer-contact{
   margin-bottom: 10px;
-  width:49.5%;
+  width:100%;
   display:inline-block;
   height:5rem;
   padding-left: 10px;
@@ -1842,7 +2399,45 @@ h5{
   outline: none;
   border: 1px solid darkgray;
 
+}
+input:not(:placeholder-shown) {
+   background-color:  rgb(232, 240, 254);
+}
 
+
+input:placeholder-shown {
+   background-color:  #ffffff!important;
+}
+
+.photo-search-container .col-md-6, .photo-search-container .col-md-12{
+    padding:0 5px 0 0;
+}
+
+.photo-search-container .custom-select{
+      margin-bottom: 10px;
+      width:100%;
+      display:inline-block;
+      height:5rem;
+      padding-left: 10px;
+      border-radius: 5px;
+      outline: none;
+      border: 1px solid darkgray;
+}
+.photo-search-container .select-selected {
+    color: black;
+    height: 4rem;
+    padding: 1.4rem;
+    border: none;
+    border-color: transparent;
+    cursor: pointer;
+    user-select: none;
+    background-color: transparent;
+}
+.lab .select-items{
+    height:auto;
+}
+.photo-search-container .select-items{
+    background-color: #eaeaea;
 }
 .mantype{
   width:49%;
@@ -1968,4 +2563,78 @@ h5{
   0%{opacity:0;}
   100%{opacity: 1;}
 }
+
 /*#############################################photo index css Ends#############################################s*/
+/*#############################################Portfolio update dp/photos css Starts#############################################s*/
+
+.edit-pp{
+  border-radius: 50%;
+  padding: 5px;
+  width: 4rem;
+  height:4rem;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  top:30%;
+  left:100%;
+  display: none;
+  color:white;
+  background: black;
+
+  border: 1px solid white;
+}
+.edit-pp:hover{
+  cursor: pointer;
+}
+.edit-pp a{
+  font-size: 18px;
+  color:white;
+  font-weight: bold;
+}
+.edit-pp .fa{
+  /*margin: 10%;*/
+  font-size: 2rem!important;
+}
+
+.upl-icon{
+  width: 90%;
+  height: 90%;
+  object-fit: cover;
+  position: relative;
+  transform: translate(-50%,0);
+  left: 55%;
+  border-radius: unset;
+  border: none;
+}
+
+.edit-cover{
+  color:white;
+  border-radius: 5px;
+  padding: 5px;
+  width:auto;
+  height:3rem;
+  position: absolute;
+  transform: translate(-50%,-50%);
+  bottom:-1rem;
+  left:50%;
+  display: none;
+  background: black;
+  border: 0.5px solid white;
+}
+.edit-cover:hover{
+  cursor: pointer;
+}
+
+.cp {
+  width:20px;
+  height:20px;
+  display: inline-flex;
+  margin-right: 10px;
+}
+.cov{
+  display: inline-flex;
+}
+.cp-txt{
+  color: white;
+}
+/*#############################################Portfolio update dp/photos css ends#############################################s*/
+

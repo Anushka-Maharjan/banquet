@@ -25,7 +25,7 @@ class CreateBanquetsTable extends Migration
             $table->text('pricing')->nullable();
             $table->integer('bike')->nullable();
             $table->integer('car')->nullable();
-            $table->text('banner')->nullable();
+            $table->text('photos')->nullable();
             $table->mediumText('logo')->nullable();
         });
     }

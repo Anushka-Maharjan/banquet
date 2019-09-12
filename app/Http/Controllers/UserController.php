@@ -71,13 +71,6 @@ class UserController extends Controller
         }
     }
 
-    public function configure(Request $request){
-            $photographer = Photographer::where('id','=',$request->input('id'))->first();
-            $photographer->name = $request->input('name');
-            $photographer->contact= $request->input('contact');
-            $photographer->address = $request->input('address');
-    }
-
     public function adminlogout(){
         Auth::logout();
         return redirect(url('/login'));

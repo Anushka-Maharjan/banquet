@@ -12,6 +12,7 @@ use App\Mail\EnquiryEmail;
 use App\IP;
 use App\Photographer;
 use App\Photos;
+use App\Photosphoto;
 use App\UniqueView;
 use App\User;
 use Illuminate\Http\Request;
@@ -40,13 +41,15 @@ class PagesController extends Controller
 
     public function portfolio($username){
         $split = explode('-',$username);
-        $id = $split[2];
+        $id = end($split);
         $photographer = Photographer::where('id','=',$id)->first();
         $user=User::where('id','=',$photographer->user_id)->first();
+        $photos=Photosphoto::where('photo_id','=',$id)->get();
+        // print_r($user);
         $result=[
             'photographer'=>$photographer,
-            'configured'=>0
-//            'configured'=>$user->logged_in
+            'configured'=>$user->logged_in,
+            'photos'=>$photos
         ];
         return view('portfolio')->with('result',$result);
     }
@@ -54,6 +57,11 @@ class PagesController extends Controller
     public function banquet($username){
         if ($username=='www'){
             return view('index');
+        }else if ($username=='photo'){
+            // $photographers=Photographers::all();
+            return view('photohome');
+        }else if($username =='banquet'){
+            return view('banquethome');
         }
         $banquet=Banquet::where('username','=',$username)->first();
         if ($banquet==null){
@@ -109,6 +117,33 @@ class PagesController extends Controller
             'count'=>$count->count
 
         );
+        for($i=1;$i<=$banquet['hall'];$i++){
+            $book=array();
+            $distinctDates=Event::where('hall','=',$i)->select('day')->distinct()->get();
+            foreach ($distinctDates as $distinctDate) {
+                $bookings = Event::where('day', '=', $distinctDate->day)->where('hall','=',$i)->get();
+                if (count($bookings) == 2) {
+                    $each['day'] = $distinctDate->day;
+                    $each['book'] = 3;
+                    array_push($book, $each);
+                } else {
+                    foreach ($bookings as $booking) {
+                        if ($booking->shift == "morning") {
+                            $each['day'] = $distinctDate->day;
+                            $each['book'] = 1;
+                            array_push($book, $each);
+                        } else {
+                            $each['day'] = $distinctDate->day;
+                            $each['book'] = 2;
+                            array_push($book, $each);
+                        }
+                    }
+                }
+            }
+            $array_name='bookings'.$i;
+            $data[$array_name]=$book;
+        }
+        return view('banquet')->with($data);
 //        for($i=1;$i<=$banquet['hall'];$i++){
 //            $book=array();
 //            $distinctDates=Event::where('hall','=',$i)->select('day')->distinct()->get();
@@ -135,8 +170,67 @@ class PagesController extends Controller
 //            $array_name='bookings'.$i;
 //            $data[$array_name]=$book;
 //        }
-        return view('banquet')->with($data);
     }
+    
+    public function searchphotographer($address,$photographer,$genre){
+        if ($photographer==1){
+        $photographers=Photographer::where('address','like','%'.$address.'%')
+        ->where('genre','like','%'.$genre.'%')->paginate(15);
+        }else{
+            $photographers=Photographer::where('address','like','%'.$address.'%')
+        ->where('genre','like','%'.$genre.'%')->where('videography','=',1)->paginate(15);
+        }
+        $data=[
+            'photographers'=>$photographers,
+            'address'=>$address,
+            'genre'=>$genre,
+            'photographer'=>$photographer
+        ];
+        return view('search-result-photo')->with($data);
+    }
+
+    public function searchbanquet($name){
+        $name=str_replace("-","'",$name);
+        $banquets=Banquet::where('name','like',"%".$name."%")->paginate(10);
+        if (count($banquets)==0){
+            $banquets=null;
+        }
+        $data=[
+            'banquets'=>$banquets,
+            'query'=>$name,
+            'result'=>'banquet'
+        ];
+        return view('search-result')->with($data);
+    }
+
+    public function searchaddress($address,$hall){
+        $threshold=100;
+        $banquets=Banquet::where('address','like',"%".$address."%")->get();
+        $result=array();
+        if (count($banquets)==0){
+            $result=null;
+        }else{
+            foreach ($banquets as $banquet){
+                if ($banquet->username==null){
+                    array_push($result,$banquet);
+                }else{
+                    $each=Capacity::where('banquet_id','=',$banquet->id)->whereBetween('capacity', [$hall-$threshold, $hall+$threshold])->get();
+                    if (count($each)>0){
+                        array_push($result,$banquet);
+                    }
+                }
+            }
+        }
+
+        $data=[
+            'banquets'=>$result,
+            'address'=>$address,
+            'hall'=>$hall,
+            'result'=>'address'
+        ];
+        return view('search-result')->with($data);
+    }
+
 
     public function autocomplete(){
         $values=explode(', ',"Bhakti Thapa Sadal, Baneshwor, Kathmandu");
@@ -154,22 +248,29 @@ class PagesController extends Controller
 //        }
     }
 
-    public function subdomain(){
-        echo "reached";
-    }
-
-    public function fetch(Request $request){
+   public function fetch(Request $request){
         if ($request->get('query')){
             $query=$request->get('query');
             if (strlen($query)>1) {
                 $data = Banquet::where('name', 'like', "%" . $query . "%")->get();
                 $output = "<ul  class=\"search-result\">";
                 if (count($data)>0) {
+                    $i=0;
                     foreach ($data as $datum) {
-                        $output .= "<li>" . $datum->name . "</li>";
+                        if ($i>9){
+                            break;
+                        }
+                        if ($datum->username!=null){
+                        $output .= "<a href=\"http://".$datum->username.".nepvent.com\"><li>" . $datum->name . "</li></a>";
+                        }else{
+                            // $datum->name=str_replace("'","-",$datum->name);
+                            $output .= "<a href=\"/search/".str_replace("'","-",$datum->name)."\"><li>" . $datum->name . "</li></a>";
+                            // $output .= "<a href=\"http://".$datum->username.".nepvent.com\"><li>" . $datum->name . "</li></a>";
+                        }
+                        $i++;
                     }
                 }else{
-                    $output .= "<li>No Result Found!!!</li>";
+                    $output .= "<li>No Result Found</li>";
                 }
                 $output .= "</ul>";
             }else{
@@ -178,6 +279,7 @@ class PagesController extends Controller
             echo $output;
         }
     }
+
 
     public function fetchaddress(Request $request){
         if ($request->get('query')){
@@ -198,6 +300,44 @@ class PagesController extends Controller
                     }
                 }
                 $output = "<ul class='search-result-address'>";
+                $final_values=array_unique($final_values);
+                sort($final_values);
+                $i=0;
+                foreach ($final_values as $final_value) {
+                    if ($i>=10){
+                        break;
+                    }
+                    $output .= "<li>" . $final_value . "</li>";
+                    $i++;
+
+                }
+                $output .= "</ul>";
+            }else{
+                $output="";
+            }
+            echo $output;
+        }
+    }
+
+    public function fetchaddressphoto(Request $request){
+        if ($request->get('query')){
+            $query=$request->get('query');
+            if (strlen($query)>1) {
+                $data = Photographer::where('address', 'like', "%" . $query . "%")->select('address')->distinct()->get();
+                $addresses=array();
+                foreach ($data as $datum) {
+                    array_push($addresses,$datum->address);
+                }
+                $final_values=array();
+                foreach ($addresses as $address) {
+                    $values=explode(', ',$address);
+                    foreach ($values as $value){
+                        if (strpos(strtolower($value), strtolower($query)) !== false){
+                            array_push($final_values,$value);
+                        }
+                    }
+                }
+                $output = "<ul class='search-result-address-photo'>";
                 $final_values=array_unique($final_values);
                 sort($final_values);
                 $i=0;
@@ -240,14 +380,5 @@ class PagesController extends Controller
 
     }
 
-    public function compressimage(){
-        $img = Image::make(public_path('uncompressed/img2.jpg'));
-        $img->encode('jpg',60);
-        $img->resize(1500,1000);
-        $img->save(public_path('/compressed/compressed2.jpg'));
-        return view('error');
-//        return $img->response('jpg');
-
-    }
 }
 
