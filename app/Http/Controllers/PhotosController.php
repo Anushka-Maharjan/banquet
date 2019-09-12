@@ -24,7 +24,7 @@ class PhotosController extends Controller
             unset($each);
             $each['id']=$photo->id;
             $each['photo']=$photo->photo;
-            $each['selected']=($photo->photo==$id['banner'])?1:0;
+            $each['selected']=($photo->photo==$id['photos'])?1:0;
             array_push($allphotos,$each);
         }
         return view('admin.photos.index')->with('photos',$allphotos);
@@ -143,6 +143,6 @@ class PhotosController extends Controller
         $banquet->banner=$photo['photo'];
         $banquet->save();
 
-        return back()->with('success','Photo has successfully been selected as banner');
+        return back()->with('success','Photo has successfully been selected as photos');
     }
 }

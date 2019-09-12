@@ -15,7 +15,7 @@
 </div>
 
 <div id="ban-360" class="banner360">
-    <img src="{{asset($banquet['banner'])}}" class="img-responsive">
+    <img src="{{asset($banquet['photos'])}}" class="img-responsive">
     <div class="banner360-text">
         <p>{{$banquet['name']}}</p>
     </div>
@@ -166,7 +166,7 @@
         <div class="swiper-container">
             <div class="swiper-wrapper">
                 @foreach($photos as $photo)
-                    @if ($photo->photo != $banquet['banner'])
+                    @if ($photo->photo != $banquet['photos'])
                         <div class="swiper-slide"><a href="{{asset($photo->photo)}}" data-lightbox="gallery"><img src="{{asset($photo->photo)}}" style="width:400px; height:250px;"></a> </div>
                     @endif
                 @endforeach

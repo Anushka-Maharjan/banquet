@@ -11,10 +11,8 @@
 |
 */
 
-Route::group(['domain' => '{subdomain}.basicwebsite.com.np'], function() {
-        Route::get('/', function ($subdomain) {
-       return $subdomain;
-    });
+Route::group(['domain' => '{username}.nepvent.com'], function() {
+    Route::get('/', 'PagesController@banquet');
 });
 
 
@@ -22,10 +20,10 @@ Route::get('/', function () {
     return view('index');
 });
 
+Route::get('/error', function () {
+    return view('error');
+});
 Route::get('/banquet/{id}', 'PagesController@banquet');
-
-Route::get('/autocomplete/', 'PagesController@autocomplete');
-
 Route::post('/book/', 'PagesController@book');
 Route::post('user/login','UserController@userlogin');
 Route::post('user/register','UserController@userregister');
@@ -33,6 +31,9 @@ Route::get('/verify/{id}','UserController@userverify');
 Route::post('/portfolio/enquire','PagesController@enquire');
 Route::get('/portfolio/{username}','PagesController@portfolio');
 Route::post('/portfolio/','PagesController@video');
+Route::get('/search/{name}','PagesController@searchaddress');
+Route::get('/search/{address}/{hall}','PagesController@searchaddress');
+Route::get('/search/{address}/{photographer}/{genre}','PagesController@searchphotographer');
 
 Route::get('/photoindex',function (){
     return view('photohome');
@@ -41,9 +42,9 @@ Route::post('/config','UserController@configure');
 Route::get('/portfolio/{username}','PagesController@portfolio');
 Route::post('/autocomplete/fetch','PagesController@fetch')->name('pages.fetch');
 Route::post('/autocomplete/fetchaddress','PagesController@fetchaddress')->name('pages.fetchaddress');
+Route::post('/autocomplete/fetchaddressphoto','PagesController@fetchaddressphoto')->name('pages.fetchaddressphoto');
 
 Route::post('/banquet/check','BanquetsController@checkusername')->name('banquets.checkusername');
-//Route::post('/register','RegisterController@register');
 
 Route::get('login/{service}','SocialAuthController@redirect');
 Route::get ( '/login/{service}/callback', 'SocialAuthController@callback' );
@@ -62,7 +63,10 @@ Route::post('admin/login','UserController@adminverify');
 Route::get('admin/register','UserController@showAdminRegister');
 
 Route::get('admin/logout','UserController@adminlogout');
-Route::get('logout','UserController@userlogout');
+Route::get('user/logout','UserController@userlogout');
+Route::resource('/photographer','PhotographersController');
+Route::post('/photographer/changedp','PhotographersController@changedp');
+Route::post('/photographer/addphotos','PhotographersController@addphotos');
 
 Route::group(['middleware' => ['auth','admin']], function() {
     Route::resource('admin/photos','PhotosController');
@@ -82,4 +86,3 @@ Route::group(['middleware' => ['auth','admin']], function() {
 
 Auth::routes( ['verify' => true]);
 
-Route::get('/admin/home', 'DashboardController@index');

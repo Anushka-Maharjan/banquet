@@ -29,7 +29,7 @@
                     @if ($photo['selected']==1)
                         <button class="btn btn-success col-sm-4" disabled><i class="fa fa-check no-left"></i></button>
                     @else
-                        <a href="{{url('admin/photos/'.$photo['id'].'/selected')}}" class="btn btn-success col-sm-6" onclick="return confirm('Do you really want to select this as your banner?')">Select as banner</a>
+                        <a href="{{url('admin/photos/'.$photo['id'].'/selected')}}" class="btn btn-success col-sm-6" onclick="return confirm('Do you really want to select this as your photos?')">Select as banner</a>
                     @endif
                     <a href="{{url('admin/photos/'.$photo['id'].'/delete')}}" class="btn btn-danger col-sm-3 col-sm-offset-2" onclick="return confirm('Are you sure?')">Delete</a>
                 </div>

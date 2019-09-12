@@ -128,9 +128,7 @@
         </div>
         <!-- slider end -->
         <div class="demo-cont__credits">
-
             <div class="demo-cont__credits-close"></div>
-
             <h2 class="demo-cont__credits-heading">Banquet Name</h2>
             <img src="//s3-us-west-2.amazonaws.com/s.cdpn.io/142996/profile/profile-512_5.jpg" alt="" class="demo-cont__credits-img" />
             <h3 class="demo-cont__credits-name">Location</h3>
@@ -156,15 +154,18 @@
 
 <div class="search-container anim-top">
     <h3 class="search-title">Looking for a Banquet? Search Here</h3>
+    {{csrf_field()}}
+
     <div class="search-area ">
-        <input class="search-field left-curve" type="text" name="banquet" id="banquet" placeholder="Search here..." >
+
+        <input autocomplete="off" class="search-field left-curve" type="text" name="banquet_name" id="banquet_name" placeholder="Search here..." >
         <button class="search-btn right-curve" onclick="redirectbanquet()" ><i class="fa fa-search"></i> </button>
 
     </div>
     <div class="search-area-alt">
-        <input class="search-field-alt left-curve border-right" type="text" name="address" id="address" placeholder="Location...">
-        <input class="search-field-alt border-left" type="number"  name="capacity" id="capacity" placeholder="Hall capacity(E.g: 500)">
-        <button class="search-btn right-curve"><i class="fa fa-search"></i> </button>
+        <input autocomplete="off" class="search-field-alt left-curve border-right" type="text" name="address" id="address" placeholder="Location...">
+        <input autocomplete="off" class="search-field-alt border-left" type="number"  name="capacity" id="capacity" placeholder="Hall capacity(E.g: 500)">
+        <button class="search-btn right-curve" onclick="redirectaddress()"><i class="fa fa-search"></i> </button>
 
     </div>
     <div class="search-bottom">
@@ -173,7 +174,10 @@
     <div class="search-bottom-alt">
         <p onclick="initialSearch()"><i class="fa fa-arrow-left"></i> Go back</p>
     </div>
-    <div class="banquet-list">
+    <div id="banquet_list">
+
+    </div>
+    <div id="address_list">
 
     </div>
 
@@ -183,12 +187,11 @@
         <input placeholder="Search Banquet..."><i class="fa fa-search"></i>
     </div>
 </div>
-<div class="page-container">
-    <div class="col-md-2" style="height: 100vh; background-color: yellow">
+<div class="page-container row">
+    <div class="col-md-2 height100" style=" background-color: yellow">
 
     </div>
-    <div class="col-md-10" style="height: 100vh;">
-        <a href="/login/facebook">Login with faccebook</a>
+    <div class="col-md-10 height100" >
         <div class="col-md-3 banquet-view">
             <img src="{{asset('images/banquet/b1.jpeg')}}" class="img-responsive">
             <h4>Indreni Banquet</h4>
@@ -329,7 +332,8 @@
         }
     );
     function switchSeatch() {
-        console.log("clicked");
+        $("#banquet_list").empty();
+        $("#banquet_name").val('');
         $('.search-area').hide();
         $('.search-area-alt').show().addClass('anim-left');
         $('.search-bottom').hide();
@@ -338,6 +342,9 @@
 
     }
     function initialSearch() {
+        $("#address_list").empty();
+        $("#address").val('');
+        $("#hall").val('');
         $('.search-area-alt').hide();
         $('.search-area').show().addClass('anim-left');
         $('.search-bottom').show().addClass('anim-left');
@@ -537,16 +544,16 @@
     });
 
     $(document).ready(function () {
-        $('#banquet').keyup(function () {
+        $('#banquet_name').keyup(function () {
             var query=$(this).val();
             if (query !=''){
                 var _token=$('input[name="_token"]').val();
                 $.ajax({
                     url:"{{route('pages.fetch')}}",
-                    method:"POST",
+                    type:"POST",
                     data:{query:query,_token:_token},
                     success:function (data) {
-                        console.log("data::"+data);
+                        //   console.log("data::"+data);
                         // $('#banquet_list').fadeIn();
                         var div = document.getElementById('banquet_list');
                         div.innerHTML = data;
@@ -554,17 +561,16 @@
                 })
             }
         });
+
         $('#address').keyup(function () {
             var query=$(this).val();
             if (query !=''){
                 var _token=$('input[name="_token"]').val();
                 $.ajax({
                     url:"{{route('pages.fetchaddress')}}",
-                    method:"POST",
+                    type:"POST",
                     data:{query:query,_token:_token},
                     success:function (data) {
-                        console.log("data::"+data);
-                        // $('#banquet_list').fadeIn();
                         var div = document.getElementById('address_list');
                         div.innerHTML = data;
                     }
@@ -573,11 +579,26 @@
         });
     })
 
-    function redirectbanquet() {
-        var query=document.getElementById('banquet_name').value;
-        window.location.href = '/new';
+    $(document).on('click','li',function() {
+
+        $('#address').val($(this).text());
+        $('#address_list').empty();
+    })
+
+    function redirectbanquet(){
+        var query=document.getElementById('banquet_name').value
+        if (query.length>=2){
+            window.location.href = '/search/'+query;
+        }
+    }
+
+    function redirectaddress(){
+        var hall=document.getElementById('capacity').value;
+        var address=document.getElementById('address').value;
+        if (hall!="" & address!=""){
+            window.location.href = '/search/'+address+'/'+hall;
+        }
     }
 </script>
 
-</body>
-</html>
+@include('include.footer')

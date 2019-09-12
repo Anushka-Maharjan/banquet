@@ -2,6 +2,7 @@
 <html >
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
     <title></title>
     {{--    <link rel="stylesheet" href="{{asset('css/bootstrap.css')}}">--}}
     {{--    <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">--}}
@@ -9,10 +10,13 @@
     <link rel="stylesheet" href="{{asset('css/swiper.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/grid-gallery.min.css')}}">
     <link rel="stylesheet" href="{{asset('css/lightbox.min.css')}}">
+
     <link rel="stylesheet" href="{{asset('css/banquet-style.css')}}">
+    <link rel="stylesheet" href="{{asset('css/owl.carousel.min.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{asset('css/responsive.css')}}">
+
     <script src="{{asset('js/jquery.min.js')}}"></script>
-    <link rel="stylesheet" type="text/css" href="{{asset('css/main.css')}}">
     {{--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>--}}
     {{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>--}}
 
@@ -21,7 +25,7 @@
     <script src="{{asset('js/grid-gallery.min.js')}}"></script>
     <script src="{{asset('js/lightbox-plus-jquery.min.js')}}"></script>
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
-
+    <script src="{{asset('js/owl.carousel.js')}}"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-142122266-1"></script>
     <script>
@@ -38,9 +42,11 @@
 
 <body>
 <div class="upper-menu">
-    <p class="col-md-6 col-md-offset-6">
+    <a href="http://nepvent.com"><img src="{{asset('images/logo/nepvent-logo-white.png')}}" class="img-responsive nepvent-logo mb-show"></a>
+    <a href="http://nepvent.com"><img src="{{asset('images/logo/nepvent-logo.png')}}" class="img-responsive nepvent-logo mb-none"></a>
+    <p class="head-link">
         @if (\Illuminate\Support\Facades\Auth::check())
-            <a href="logout">Logout</a>
+            <a href="{{url('user/logout')}}">Logout</a>
         @else
             <a onclick="loginmodal()" class="border-right-white"> Login</a >
             <a onclick="registermodal()" style="padding-left: 1%">Register</a>
@@ -64,7 +70,7 @@
             </div>
             <div class="modal-body" style="height: auto">
                 <div class="login-reg log" >
-                    <div style="height: 2rem; padding: 0">
+                    <div class="modal-opt">
                         <p class="text-right"> Not a member yet? <a href="register.php">Register</a> </p>
                     </div>
                     <div class="bg-gray">
@@ -99,45 +105,56 @@
             </div>
             <div class="modal-body" style="height: auto">
                 <div class="login-reg reg">
-                    <div style="height: 2rem; padding: 0">
+                    <div class="modal-opt">
                         <p class="col-md-6 text-left"> Welcome to Website Name!</p>
                         <p class="col-md-6 text-right"> Already a member?<a href="login.php">Login</a> </p>
                     </div>
 
 
                     <div class="bg-gray">
-                        <form action="{{action('UserController@userregister')}}" method="post">
-                            @csrf
-                            <span class="col-md-6">
-                            <label for="fname">Full Name</label>
-                            <input type="text" id="fname" name="fname" placeholder="Your full name.." required>
-                            </span>
-                            <span class="col-md-6">
-                            <label for="contact">Phone Number</label>
-                            <input type="number" id="contact" name="contact" placeholder="Your number.." required>
-                            </span>
-                            <div class="col-md-12">
-                            <label for="contact">Email</label>
-                            <input type="email" id="contact" name="email" placeholder="Your email.." >
-                            </div>
-                            <span class="col-md-6">
-                            <label for="password">Password</label>
-                            <input type="password" id="password" name="password" placeholder="Your password.." required>
-                            </span>
-                                <span class="col-md-6">
-                            <label for="password">Confirm Password</label>
-                            <input type="password" id="password" name="password_confirmation" placeholder="Your password.." required>
-                                </span>
-                            <input type="submit" value="Register">
-                        </form>
-                        <div style="width: 100%; height: 12rem; padding: 20px; text-align: center">
-                            <p>If you want to register your banquet, click below</p>
-                            <button onclick="registerbanqmodal()" class="banq-reg-btn">Register Your Banquet</button></>
-                        </div>
-{{--                        <h3 class="text-center font-gray">Or</h3>--}}
-{{--                        <a href="{{url('login/facebook')}}"><button class="loginFb"><i class="fa fa-facebook"></i> Login with Facebook</button></a>--}}
-{{--                        <a href="{{url('login/google')}}"> <button class="loginGm"><i class="fa fa-google"></i> Login with Google</button></a>--}}
+                        <div class="row">
+                                <div class="col-md-7 mod-border-right">
+                                        <form action="{{action('UserController@userregister')}}" method="post">
+                                        @csrf
+                                        
+                                        <div class="col-md-6">
+                                        <label for="fname">Full Name</label>
+                                        <input type="text" id="fname" name="fname" placeholder="Your full name.." required>
+                                        </div>
+                                        <div class="col-md-6">
+                                        <label for="contact">Phone Number</label>
+                                        <input type="number" id="contact" name="contact" placeholder="Your number.." required>
+                                        </div>
+                                        <div class="col-md-12">
+                                        <label for="contact">Email</label>
+                                        <input type="email" id="contact" name="email" placeholder="Your email.." >
+                                        </div>
+                                        <div class="col-md-6">
+                                        <label for="password">Password</label>
+                                        <input type="password" id="password" name="password" placeholder="Your password.." required>
+                                        </div>
+                                            <div class="col-md-6">
+                                        <label for="password">Confirm Password</label>
+                                        <input type="password" id="password" name="password_confirmation" placeholder="Your password.." required>
+                                            </div>
+                                        <input type="submit" value="Register">
+                                    </form>
+                                    <h3 class="text-center font-gray margin0">Or</h3>
+                                    <a href="{{url('login/facebook')}}"><button class="loginFb"><i class="fa fa-facebook"></i> Login with Facebook</button></a>
+                                    <a href="{{url('login/google')}}"> <button class="loginGm"><i class="fa fa-google"></i> Login with Google</button></a>
 
+                                </div>
+                                <div class="col-md-5">
+                                    <div style="width: 100%; height: auto; padding: 10px; text-align: center">
+                                        <p>If you want to register your banquet, click below</p>
+                                        <button onclick="registerbanqmodal()" class="banq-reg-btn">Register Your Banquet</button></>
+                                    </div>
+                                    <img src="{{asset('images/icon/pointingMan.png')}}" class="img-responsive" style="object-fit:cover;height:37rem">
+                                    
+                                </div>
+                            </div>
+                    
+                      
                     </div>
                 </div>
             </div>
@@ -155,7 +172,7 @@
             </div>
             <div class="modal-body" style="height: auto">
                 <div class="login-reg reg">
-                    <div style="height: 2rem; padding: 0">
+                    <div class="modal-opt" >
                         <p class="col-md-6 text-left"> Welcome to Website Name!</p>
                         <p class="col-md-6 text-right"> Already a member?<a href="login.php">Login</a> </p>
                     </div>
@@ -190,13 +207,7 @@
                                 </span>
                             <input type="submit" value="Register">
                         </form>
-                        <div style="width: 100%; height: 12rem; padding: 20px; text-align: center">
-                            <p>If you want to register your banquet, click below</p>
-                            <button onclick="registerbanqmodal()" class="banq-reg-btn">Register Your Banquet</button></>
-                    </div>
-                    {{--                        <h3 class="text-center font-gray">Or</h3>--}}
-                    {{--                        <a href="{{url('login/facebook')}}"><button class="loginFb"><i class="fa fa-facebook"></i> Login with Facebook</button></a>--}}
-                    {{--                        <a href="{{url('login/google')}}"> <button class="loginGm"><i class="fa fa-google"></i> Login with Google</button></a>--}}
+                  
 
                 </div>
             </div>
@@ -209,7 +220,7 @@
     function loginmodal() {
         $('#login-modal').modal({show: true});
     }
-    function registermodal() {
+     function registermodal() {
         $('#reg-modal').modal({show:true});
     }
     function registerbanqmodal(){

@@ -1,376 +1,19 @@
 @include('include.header')
-
-<link rel="stylesheet" type="text/css" href="{{asset('css/owl.carousel.min.css')}}">
-<style>
-    .main-banner{
-        width:100%;
-        height:60rem;
-        position: relative;
-        top:0;
-        left:0;
-        background-image: url("images/nepvent-home.jpg");
-        background-repeat: no-repeat;
-        background-position: center;
-        background-size: cover;
-    }
-    .home-search-container{
-        padding:10px;
-        position: relative;
-        transform: translate(-50%,-50%);
-        left:50%;
-        top:50%;
-        width:80rem;
-        height:10rem;
-        background: rgba(255,255,255,0.8);
-        border-radius: 5px;
-    }
-    .text-left{
-        text-align:left;
-    }
-    .index-search-field input{
-        width:100%;
-        height:4rem;
-        padding-left: 10px;
-        /*border-right: 3px solid lightgray;*/
-        border: 1px solid transparent;
-        border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
-
-        outline: none;
-
-    }
-    .home-search-container .col-md-4, .home-search-container .row{
-        padding: 0;
-        margin:0;
-    }
-    .search-contains{
-        width:90%;
-        float: left;
-        display: inline-block;
-    }
-    .search-contains p{
-        margin-bottom: 0;
-        font-family: fantasy;
-        font-size: 2rem;
-        color: gray;
-    }
-    .index-search{
-        margin-top: 2.8rem;
-        width:100%;
-        height:4rem;
-    }
-    .index-search-btn{
-        width:10%;
-        height:100%;
-        border: none;
-        color:white;
-        background: #2391bb;
-    }
-    .comma{
-        position:absolute;
-        left:-55px;
-        width:60px;
-        height:60px;
-        z-index:10;
-        top:-34rem;
-        opacity:0.8;
-    }
-    .comma-right{
-        position:absolute;
-        right:-55px;
-        width:60px;
-        height:60px;
-        z-index:10;
-        top:-34rem;
-        opacity:0.8;
-    }
-    /*the container must be positioned relative:*/
-    .custom-select {
-        width:100%;
-        height:4rem;
-        position: relative;
-        border-right: 2px solid #f4f4f2;
-        font-family: Arial;
-    }
-
-    .custom-select select {
-        display: none; /*hide original SELECT element:*/
-    }
-
-    .select-selected {
-        background-color: #ffffff;
-    }
-
-    /*style the arrow inside the select element:*/
-    .select-selected:after {
-        position: absolute;
-        content: "";
-        top: 14px;
-        right: 10px;
-        width: 0;
-        height: 0;
-        border: 6px solid transparent;
-        border-color: black transparent transparent transparent;
-    }
-
-    /*point the arrow upwards when the select box is open (active):*/
-    .select-selected.select-arrow-active:after {
-        border-color: transparent transparent black transparent;
-        top: 7px;
-    }
-
-    /*style the items (options), including the selected item:*/
-    .select-items div,.select-selected {
-        color: black;
-        height:4rem;
-        padding: 8px 16px;
-        border: 1px solid transparent;
-        border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent;
-        cursor: pointer;
-        user-select: none;
-    }
-
-    /*style items (options):*/
-    .select-items {
-        position: absolute;
-        background-color: white;
-        top: 100%;
-        left: 0;
-        right: 0;
-        height:16rem;
-        overflow: auto;
-        z-index: 99;
-    }
-
-    /*hide the items when the select box is closed:*/
-    .select-hide {
-        display: none;
-    }
-
-    .select-items div:hover, .same-as-selected {
-        background-color: rgba(0, 0, 0, 0.1);
-    }
-
-    .anim-fade-in{
-        animation: fadeIn 2s 1;
-    }
-    @-webkit-keyframes fadeIn {
-        0%{opacity:0;}
-        100%{opacity: 1;}
-    }
-    .bounce{
-        -webkit-animation: bouncer 2s ease-out;
-        -moz-animation: bouncer 2000ms ease-out;
-        -o-animation: bouncer 2000ms ease-out;
-        animation: bouncer 2s ease-out;
-        animation-delay: 2s;
-    }
-    @-webkit-keyframes bouncer {
-
-        0% {
-            -webkit-transform:translateY(-100%);
-        }
-        5% {
-            -webkit-transform:translateY(-60%);
-        }
-        15% {
-            -webkit-transform:translateY(0);
-        }
-        20% {
-            -webkit-transform:translateY(-60%);
-        }
-        25% {
-            -webkit-transform:translateY(0%);
-        }
-        30% {
-            -webkit-transform:translateY(-50%);
-        }
-        35% {
-            -webkit-transform:translateY(0%);
-        }
-        40% {
-            -webkit-transform:translateY(-40%);
-        }
-        45% {
-            -webkit-transform:translateY(0%);
-        }
-        50% {
-            -webkit-transform:translateY(-30%);
-        }
-        55% {
-            -webkit-transform:translateY(0%);
-        }
-        60% {
-            -webkit-transform:translateY(-10%);
-        }
-        65% {
-            -webkit-transform:translateY(0%);
-        }
-        70% {
-            -webkit-transform:translateY(-5%);
-        }
-        75% {
-            -webkit-transform:translateY(0);
-        }
-        80% {
-            -webkit-transform:translateY(-1%);
-        }
-        85% {
-            -webkit-transform:translateY(0);
-        }
-        90% {
-            -webkit-transform:translateY(-1%);
-        }
-        95% {
-            -webkit-transform:translateY(0);
-        }
-        100% {
-            -webkit-transform:translateY(0);
-        }
-    }
-    .banquet-ad{
-        padding: 15px;
-        position: relative;
-        height:40rem;
-        width:100%;
-        margin: 20px 0 0 0;
-        background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,0.7)), url('images/banquet1.jpg');
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-    .nepvent-desc{
-        min-height: auto;
-        width:100%;
-        margin: 50px 0 20px 0;
-        padding: 0 20px 0 20px;
-    }
-    .nepvent-desc p{
-        font-size: 16px;
-        line-height: 1.7;
-        text-align: center;
-    }
-    .nepvent-desc h3{
-        font-weight: bold;
-    }
-    .ptr-container{
-        background-color: #eaedfe;
-        padding:10px;
-        border: none;
-        border-radius: 10px;
-        width:100%;
-        height:auto;
-        box-shadow: 0 10px 15px rgba(0,0,0,0.4);
-    }
-    .ptr-container input{
-        padding-left: 10px;
-        width:100%;
-        height:4rem;
-        border: none;
-        margin-bottom: 20px;
-
-    }
-    .ptr-container p{
-        margin-bottom: 0;
-        text-align: left;
-    }
-    .confirm-btn{
-        margin-top: 10px;
-        width:100%;
-        height:5rem;
-        background: #8191f1;
-        color:white;
-        font-weight: bold;
-        /*font-size: 18px;*/
-        border-radius: 3px;
-    }
-    .ad-slider{
-        border-radius: 5px;
-        padding: 15px 15px 15px 15px;
-        position: absolute;
-        width:60rem;
-        height:30rem;
-        background-color: rgba(0,0,0,0.7);
-        transform: translate(-50%,-50%);
-        top:50%;
-
-    }
-    .ad-right{
-        left:70%;
-
-    }
-    .owl-carousel{
-        height:100%;
-    }
-    .owl-carousel .item{
-        height:100%
-    }
-    .owl-carousel .item img{
-        height:90%;
-        object-fit: cover;
-    }
-    .text-white{
-        color:white;
-    }
-    .banquet-ad-txt{
-        font-family: Papyrus, Herculanum, Party LET, Curlz MT, Harrington, fantasy;
-        position: relative;
-        float: left;
-        width:40%;
-        height:auto;
-        font-weight: bolder;
-    }
-    .banquet-ad-txt p, .pho-ad-txt p{
-        font-size: 18px;
-    }
-    .pho-ad{
-        padding: 15px;
-        position: relative;
-        height:40rem;
-        width:100%;
-        margin: 0 0 20px 0;
-        background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,0.7)), url('images/pho1.png');
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-    }
-    .pho-ad-txt{
-        font-family: Papyrus, Herculanum, Party LET, Curlz MT, Harrington, fantasy;
-        position: relative;
-        float: right;
-        width:40%;
-        height:auto;
-        font-weight: bolder;
-        z-index:12;
-    }
-    .ad-left{
-        left:30%;
-    }
-    .border{
-        z-index: 5;
-        width: 100%;
-        height:10rem;
-        background-image: url("images/border.png");
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        position: absolute;
-        bottom:-40px;
-        left:0;
-        opacity:0.8;
-    }
-
-</style>
+    <div style="position:relative;top:-7rem;width:100%; height:30rem;" class="mb-show">
+            <img src="{{asset('images/himal.jpg')}}" class="img-responsive width100" style="height:100%">
+    </div>
 <div class="main-banner">
 
     <div class="home-search-container anim-fade-in">
-        <div class="comma ">
-            <img src="images/comma.png" class="img-responsive">
+        <div class="comma mb-none">
+            <img src="{{asset('images/comma.png')}}" class="img-responsive">
         </div>
-        <div class="comma-right ">
-            <img src="images/comma-right.png" class="img-responsive">
+        <div class="comma-right mb-none">
+            <img src="{{asset('images/comma-right.png')}}" class="img-responsive">
         </div>
+     
         <div class="search-contains anim-fade-in">
-            <div class="row ">
+            <div class="row mb-none">
                 <div class="col-md-4 ">
                     <p class="text-left">I want</p>
                 </div>
@@ -383,6 +26,8 @@
             </div>
             <div class="row index-search-field">
                 <div class="col-md-4">
+                    <p class="text-left mb-show">I want</p>
+
                     <div class="custom-select" >
                         <select>
                             <option value="0">Select:</option>
@@ -395,6 +40,8 @@
                     </div>
                 </div>
                 <div class="col-md-4">
+                    <p class="text-left mb-show">for</p>
+
                     <div class="custom-select" >
                         <select>
                             <option value="0">Select:</option>
@@ -406,6 +53,8 @@
                     </div>
                 </div>
                 <div class="col-md-4">
+                    <p class="text-left mb-show">at</p>
+
                     <input type="text" placeholder="Location">
 
                 </div>
@@ -421,7 +70,7 @@
     <div class="col-md-4">
         <h3 class="text-center">What is Nepvent</h3>
         <div style="width:6rem;transform: translate(-50%,0); left:50%;position: relative">
-            <img src="images/100244_preview.png" class="img-responsive" style="width:100%">
+            <img src="{{asset('images/icon/dart.png')}}" class="img-responsive" style="width:100%">
         </div>
         <p>
             Events play a vital role in human society. The least excuse could be found for good forms of celebrations. Events are planned acts and performances, which originates from ancient history. Events and festivals are well documented in the historical era before the fall of the Western Roman Empire (A.D 476).
@@ -430,7 +79,7 @@
     <div class="col-md-4">
         <h3 class="text-center">Why Nepvent?</h3>
         <div style="width:6rem;transform: translate(-50%,0); left:50%;position: relative">
-            <img src="images/cartoon-1294877_1280.png" class="img-responsive" style="width:100%">
+            <img src="{{asset('images/icon/cartoon-1294877_1280.png')}}" class="img-responsive" style="width:100%">
         </div>
         <p>
             Events play a vital role in human society. The least excuse could be found for good forms of celebrations. Events are planned acts and performances, which originates from ancient history. Events and festivals are well documented in the historical era before the fall of the Western Roman Empire (A.D 476). entities and to share rituals and celebrations with each other.

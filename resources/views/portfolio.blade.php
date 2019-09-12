@@ -1,4 +1,6 @@
 @include('include.header')
+    <link rel="stylesheet" type="text/css" href="{{asset('css/main.css')}}">
+
 
 
 <div class="landscape-slide">
@@ -6,16 +8,37 @@
         <div class="carousel-inner">
             <div class="item active" id ="slide0">
                 <div >
-                    <a href="{{asset('images/banner.jpg')}}" data-lightbox="promo"><img src="{{asset('images/banner.jpg')}}" class="img-responsive" ></a>
+                    <a href="{{asset($result['photographer']->banner)}}" data-lightbox="promo"><img src="{{asset('photos')}}" class="img-responsive" ></a>
                 </div>
             </div>
-
+            @if (\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->role=='photo')
+                <a onclick="displaymodel('bannerupdate')"><div class="edit-cover" id="edit-cover">
+                    <div class="cov" >
+                        <img src="{{asset('images/icon/cam.png')}}" class="img-responsive cp">
+                            <p class="cp-txt">Update Banner</p>
+                    </div>
+                </div>
+                </a>
+            @endif
         </div>
         <div class="pg-enquire" >
             <button onclick="displaymodel('enquire')">Enquire</button>
         </div>
         <div class="profile-img-container">
-            <a href="{{asset('images/dummy.png')}}" data-lightbox="profile"><img src="{{asset('images/dummy.png')}}" class="img-responsive" ></a>
+            <a href="{{asset('storage\photo\profile\\'.$result['photographer']->dp)}}" data-lightbox="profile"><img src="{{asset('storage\photo\profile\thumbnail\\'.$result['photographer']->dp)}}" class="img-responsive pp" ></a>
+            @if (\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->role=='photo')
+                <div class="edit-pp" id="edit-pp">
+                    <img src="{{asset('images/icon/cam.png')}}" class="img-responsive upl-icon">
+                </div>
+                {!! Form::open(['action'=>'PhotographersController@changedp','method'=>'POST','class'=>'form-horizontal','id'=>'edit-pp','enctype'=>'multipart/form-data']) !!}
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <input type="file" name="profile" onchange="form.submit()" id="profile" style="display: none" /><span id="spnFilePath"></span>
+                    </div>
+                </div>
+                <input type="hidden" name="id" value="{{$result['photographer']->id}}">
+                {!! Form::close() !!}
+            @endif
         </div>
     </div>
 
@@ -24,40 +47,58 @@
     <div>
         <ul class="nav nav-tabs">
             <li class="active"><a data-toggle="tab" href="#home">About</a></li>
-            <li><a data-toggle="tab" href="#menu1">Review/rating</a></li>
+            <!--<li><a data-toggle="tab" href="#menu1">Review/rating</a></li>-->
 
         </ul>
-
         <div class="tab-content">
             <div id="home" class="tab-pane fade in active" >
+            @if(isset($success))
+                <div class="alert alert-success">
+                    {{$success}}
+                </div>
+            @endif
+            
+            @if(isset($error))
+                <div class="alert alert-danger">
+                    {{$error}}
+                </div>
+            @endif
+
                 <div class="row">
                     @if ($result['configured']==1)
                         <div class="col-md-3">
                             <h4>Name</h4>
-                            <p >Sayal Baidya</p><br>
+                            <p>{{$result['photographer']->name}}</p><br>
                             <h4>Address</h4>
-                            <p >Kupondole, Kathmandu</p><br>
+                            <p>{{$result['photographer']->address}}</p><br>
                         </div>
                         <div class="col-md-3">
                             <h4>Experience</h4>
-                            <p >Pro ho dai</p><br>
+                            <p>{{$result['photographer']->experience}}</p><br>
                             <h4>Genre</h4>
-                            <p>Sab kuch</p><br>
+                            <?php $genre=explode(',',$result['photographer']->genre)?>
+                            <p>
+                            @foreach($genre as $value)
+                                @if($value==end($genre))
+                                        {{$value}}
+                                @else
+                                    {{$value}},
+                                    @endif
+                            @endforeach
+                            </p><br>
                         </div>
                         <div class="col-md-6 ">
                             <h4>Bio</h4>
-                            <p class="bio">This is my bio. I am my bio. We are our bio. Loreum Ipsum is my bro.
-                                This is my bio. I am my bio. We are our bio. Loreum Ipsum is my bro.
-                                This is my bio. I am my bio. We are our bio. Loreum Ipsum is my bro.</p>
-                            <p><b>Facebook:</b><a href="https://www.facebook.com/sayalvaidya"> https://www.facebook.com/sayalvaidya</a></p>
-                            <p><b>Instagram:</b><a href="https://www.instagram.com/sayalvaidya/"> https://www.instagram.com/sayalvaidya</a></p>
+                            <p class="bio">{{$result['photographer']->bio}}</p>
+                            {{--<p><b>Facebook:</b><a href="https://www.facebook.com/sayalvaidya"> https://www.facebook.com/sayalvaidya</a></p>--}}
+                            {{--<p><b>Instagram:</b><a href="https://www.instagram.com/sayalvaidya/"> https://www.instagram.com/sayalvaidya</a></p>--}}
                             @if (\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->role=='photo')
-                                <button style="float: right" onclick="displaymodel('edit')"><i class="fa fa-pencil-square-o" ></i> Edit Profile</button>
+                                <button style="float: right;" onclick="displaymodel('edit')"><i class="fa fa-pencil-square-o" ></i> Edit Profile</button>
                             @endif
                         </div>
                     @else
                         @if (\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::id()==$result['photographer']->user_id)
-                            <a onclick=" displaymodel('edit')">Configure Profile</a>
+                            <a onclick=" displaymodel('login')">Configure Profile</a>
                         @endif
                     @endif
                 </div>
@@ -155,23 +196,6 @@
     <!--    </div>-->
 
 </div>
-<div class="container event-space ">
-    <h3 class="text-center">Event Coverages</h3>
-    <div class="swiper-container">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide"><a href="images/banquet/banquet2.jpg" data-lightbox="gallery"><img src="images/banquet/banquet2.jpg" ><p class="text-center">Ram Sita Wedding</p></a> </div>
-            <div class="swiper-slide"><a href="images/banquet/b3.jpeg" data-lightbox="gallery"><img src="images/banquet/b3.jpeg" ><p class="text-center">Ram Gita Wedding</p></a> </div>
-            <div class="swiper-slide"><a href="images/banquet2.jpg" data-lightbox="gallery"><img src="images/banquet2.jpg" ><p class="text-center">Aditya Narayan Jha Farenheit</p></a> </div>
-            <div class="swiper-slide"><a href="images/banquet/b1.jpeg" data-lightbox="gallery"><img src="images/banquet/b1.jpeg" ><p class="text-center">Hari Bratabandha</p></a> </div>
-
-        </div>
-        <!-- Add Pagination -->
-        <div class="swiper-pagination"></div>
-    </div>
-</div>
-<!--<div class="curve-op">-->
-<!---->
-<!--</div>-->
 
 <div class="container gallery-space">
     <div id="gg-screen" hidden></div>
@@ -179,31 +203,37 @@
 
     <div class="main">
         <div class="gg-box">
-            <img src="images/banquet1.jpg">
-            <img src="images/Banquethall-Banner.jpg">
-            <img src="images/banquet/b1.jpeg">
-            <img src="images/banquet2.jpg">
-            <img src="images/banquet/b3.jpeg">
-            <img src="images/banquet2.jpg">
-            <img src="images/banquet1.jpg">
-            <img src="images/banquet2.jpg">
-            <img src="images/banquet1.jpg">
-            <img src="images/banquet1.jpg">
-
+            @if (\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->role=='photo')
+            <img style="object-fit: contain" id="add_image" src="{{asset('images/upload.png')}}">
+            @endif
+            @foreach($result['photos'] as $photo)
+                    <img src="{{asset('storage\photo\photos\thumbnail\\'.$photo->photo)}}">
+            @endforeach
+                @if (\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->role=='photo')
+                {!! Form::open(['action'=>'PhotographersController@addphotos','method'=>'POST','class'=>'form-horizontal','id'=>'photoform','enctype'=>'multipart/form-data']) !!}
+                <div class="form-group">
+                    <div class="col-sm-4">
+                        <input type="file" name="photos[]" onchange="form.submit()" id="photos" style="display: none" multiple /><span id="spnFilePath"></span>
+                    </div>
+                </div>
+                    <input type="hidden" name="id" value="{{$result['photographer']->id}}">
+                    {!! Form::close() !!}
+                    @endif
         </div>
     </div>
 </div>
+@if($result['photographer']->videography==1)
 <div class="container video-space">
+    <h3 class="text-center">Promo Video </h3>
     @if (\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->role=='photo')
-        <h3 class="text-center">Promo Video </h3><button onclick="editVideo()">Edit Video</button>
+        <button onclick="editVideo()">Edit Video</button>
     @endif
     <iframe class="promo-video" src="https://www.youtube.com/embed/lx9UPNzOXg8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-
 </div>
+@endif
 
 <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog width70" >
-
         <!-- Modal content-->
         <div class="modal-content">
             <div class="modal-header">
@@ -219,57 +249,144 @@
             <div class="modal-body" style="height: auto">
                 <div class="container-contact100">
                     <div class="wrap-contact100">
-                        <form class="contact100-form validate-form" method="post" action="{{action('UserController@configure')}}">
+                        {!! Form::open(['action'=>'PhotographersController@store','method'=>'POST','class'=>'contact100-form validate-form','enctype'=>'multipart/form-data']) !!}
                             @csrf
-                            <input type="hidden" value="{{$result['photographer']->id}}">
                             <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Enter Your Name">
                                 <span class="label-input100">Name *</span>
-                                <input class="input100" type="text" name="name" placeholder="{{$result['photographer']->name}}">
+                                <input class="input100" type="text" name="name" placeholder="Enter Name" value="{{$result['photographer']->name}}">
                             </div>
-
+                            <input type="hidden" name="id" value="{{$result['photographer']->id}}">
                             <div class="wrap-input100 bg1 rs1-wrap-input100" data-validate = "Enter Address">
                                 <span class="label-input100">Address</span>
                                 <input class="input100" type="text" name="address" placeholder="Enter Address">
+                            </div>
+                            <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Enter Your Name">
+                                <span class="label-input100">Contact *</span>
+                                <input class="input100" type="text" name="contact" placeholder="Enter Contact" value="{{$result['photographer']->contact}}">
+                            </div>
+                            <div class="wrap-input100 bg1 rs1-wrap-input100">
+                                <span class="label-input100 ">Do you offer Videography?</span>
+                                <div class="form-group">
+                                    <input type="radio" name="videography" value="1"> Yes
+                                    <input type="radio" name="videography" value="0"> No
+                                </div>
                             </div>
                                 <div class="wrap-input100 bg1 rs1-wrap-input100">
                                     <span class="label-input100 ">Experience</span>
                                     <div class="form-group">
                                         <input type="radio" name="experience" value="Entrant"> Entrant<br>
-                                        <input type="radio" name="experience" value="Skiller"> Skilled<br>
-                                        <input type="radio" name="experience" value="Progessional"> Professional
+                                        <input type="radio" name="experience" value="Skilled"> Skilled<br>
+                                        <input type="radio" name="experience" value="Professional"> Professional
                                     </div>
                                 </div>
                                 <div class="wrap-input100 bg1 rs1-wrap-input100">
                                     <span class="label-input100">Preferred Type</span>
                                     <div class="form-group">
+                                         @php $categories=array('Wedding','Portrait','Product','Wildlife','Fineart','Architectural','Travel','Advertisement','Sports','Event'); 
+                                        $i=0 @endphp
                                         <div class="col-sm-6">
-                                            <input type="checkbox" name="vehicle1" value="Bike">Wedding<br>
-                                            <input type="checkbox" name="vehicle2" value="Car">Portrait<br>
-                                            <input type="checkbox" name="vehicle3" value="Boat">Product<br>
-                                            <input type="checkbox" name="vehicle3" value="Boat">Wildlife<br>
-                                            <input type="checkbox" name="vehicle3" value="Boat">Fineart<br>
-                                        </div>
-                                        <div class="col-sm-6">
-                                            <input type="checkbox" name="vehicle1" value="Bike">Architectural<br>
-                                            <input type="checkbox" name="vehicle2" value="Car">Travel<br>
-                                            <input type="checkbox" name="vehicle3" value="Boat">Advertisement<br>
-                                            <input type="checkbox" name="vehicle3" value="Boat">Sports<br>
-                                            <input type="checkbox" name="vehicle3" value="Boat">Event<br>
-                                        </div>
+                                        @foreach ($categories as $category)
+                                            <input type="checkbox" name="genre[]" value="{{$category}}">{{$category}}<br>
+                                            @if ($i==4)
+                                            </div>
+                                            <div class="col-sm-6">
+                                            @endif
+                                            @php $i++ @endphp
+                                        @endforeach
+                                    </div>
                                     </div>
                                 </div>
                             {{--</div>--}}
+
                             <div class="wrap-input100 validate-input bg0 rs1-alert-validate" data-validate = "Please Type Your Bio">
                                 <span class="label-input100">Bio</span>
                                 <textarea class="input100" name="bio" placeholder="Enter Your Bio"></textarea>
                             </div>
-                            <div class="wrap-input100 validate-input bg0 rs1-alert-validate" data-validate = "Please Type Your Bio">
-                                <span class="label-input100">Bio</span>
-                                <textarea class="input100" name="message" placeholder="Write your bio"></textarea>
+
+                            <div class="container-contact100-form-btn">
+                                <button class="contact100-form-btn">
+						<span>
+							Submit
+							<i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+						</span>
+                                </button>
+                            </div>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal fade" id="editProfile" role="dialog">
+    <div class="modal-dialog width70" >
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-sm-11">
+                        <h3>Edit Profile</h3>
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="button" class="close" data-dismiss="modal" onclick="displayDivs()">&times;</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body" style="height: auto">
+                <div class="container-contact100">
+                    <div class="wrap-contact100">
+                        <form class="contact100-form validate-form" method="post" action="{{action('PhotographersController@store')}}">
+                            @csrf
+                            <input type="hidden" value="{{$result['photographer']->id}}">
+                            <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Enter Your Name">
+                                <span class="label-input100">Name *</span>
+                                <input class="input100" type="text" name="name" placeholder="Enter Name" value="{{$result['photographer']->name}}">
+                            </div>
+
+                            <div class="wrap-input100 bg1 rs1-wrap-input100" data-validate = "Enter Address" >
+                                <span class="label-input100">Address</span>
+                                <input class="input100" type="text" name="address" placeholder="Enter Address" value="{{$result['photographer']->address}}">
+                            </div>
+                            <div class="wrap-input100 bg1 rs1-wrap-input100">
+                                <span class="label-input100 ">Experience</span>
+                                <div class="form-group">
+                                    <input type="radio" name="experience" value="Entrant" @if ($result['photographer']->experience=="Extrant") checked @endif> Entrant<br>
+                                    <input type="radio" name="experience" value="Skilled" @if ($result['photographer']->experience=="Skilled") checked @endif> Skilled<br>
+                                    <input type="radio" name="experience" value="Professional" @if ($result['photographer']->experience=="Professional") checked @endif> Professional
+                                </div>
+                            </div>
+                            <div class="wrap-input100 bg1 rs1-wrap-input100">
+                                <span class="label-input100">Preferred Type</span>
+                                <div class="form-group">
+                                    @php $categories=array('Wedding','Portrait','Product','Wildlife','Fineart','Architectural','Travel','Advertisement','Sports','Event'); 
+                                    $i=0;
+                                    $existing_categories=explode(',',$result['photographer']->genre)@endphp
+                                    <div class="col-sm-6">
+                                        @foreach ($categories as $category)
+                                        
+                                            <input type="checkbox" name="genre[]" value="{{$category}}" @if (in_array($category,$existing_categories)) checked @endif>{{$category}}<br>
+                                            @if ($i==4)
+                                            </div>
+                                            <div class="col-sm-6">
+                                            @endif
+                                            @php $i++ @endphp
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wrap-input100 bg1">
+                                <span class="label-input100 ">Do you offer Videography?</span>
+                                <div class="form-group">
+                                    <input type="radio" name="videography" value="1" @if ($result['photographer']->videography==1) checked @endif> Yes
+                                    <input type="radio" name="videography" value="0" @if ($result['photographer']->videography==0) checked @endif> No
+                                </div>
                             </div>
                             <div class="wrap-input100 validate-input bg0 rs1-alert-validate" data-validate = "Please Type Your Bio">
                                 <span class="label-input100">Bio</span>
-                                <textarea class="input100" name="message" placeholder="Write your bio"></textarea>
+                                <textarea class="input100" name="bio" placeholder="Enter Your Bio">{{$result['photographer']->bio}}</textarea>
                             </div>
 
                             <div class="container-contact100-form-btn">
@@ -298,7 +415,7 @@
             <div class="modal-header">
                 <div class="row">
                     <div class="col-sm-11">
-                        <h3>Edit Profile</h3>
+                        <h3>Configure Profile</h3>
                     </div>
                     <div class="col-sm-1">
                         <button type="button" class="close" data-dismiss="modal" onclick="displayDivs()">&times;</button>
@@ -363,7 +480,54 @@
     </div>
 </div>
 
-<script src="style/js/grid-gallery.min.js"></script>
+<div class="modal fade" id="bannerupdate" role="dialog">
+    <div class="modal-dialog width70" >
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-sm-11">
+                        <h3>Configure Profile</h3>
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="button" class="close" data-dismiss="modal" onclick="displayDivs()">&times;</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body" style="height: auto">
+                <div class="" style="border: 1px solid lightgray; padding: 10px; box-shadow: 0 10px 15px rgba(0,0,0,0.6)">
+    <div class="upl-new-container">
+        <div class="upl-innner">
+            <div class="upl-mid-conatiner">
+                <img src="images/icon/up.png" class="img-responsive">
+                <h3 class="text-center">Upload Image</h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="existing-container">
+        <h3>Choose existing image:</h3>
+        <div class="exsisting-opt">
+            @foreach($result['photos'] as $photo)
+                <label>
+                    <input type="radio" name="ex-opt" value="{{$photo->photo}}">
+                    <img src="{{asset('storage\photo\photos\thumbnail\\'.$photo->photo)}}">
+                </label>
+            @endforeach
+ 
+        </div>
+
+    </div>
+</div>
+
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script src="{{asset('js/grid-gallery.min.js')}}"></script>
 
 <script>
 
@@ -378,8 +542,12 @@
                 @endif
             }else if (type =='video') {
                 $('#myVideoModal').modal({show: true});
-            }else {
+            }else if (type=='login') {
                 $('#myModal').modal({show: true});
+            }else if (type=='bannerupdate') {
+                $('#bannerupdate').modal({show: true});
+            }else{
+                $('#editProfile').modal({show: true});
             }
         @else
             $('#login-modal').modal({show: true});
@@ -465,4 +633,38 @@
             }
         });
     });
+
+    $('.profile-img-container').hover(
+        function () {
+            $('.edit-pp',this).stop(true,true).fadeIn("fast");
+            $(this).toggleClass('open');
+        },
+        function () {
+            $('.edit-pp',this).stop(true,true).fadeOut("fast");
+            $(this).toggleClass('open');
+        }
+    );
+
+    $("#add_image").click(function () {
+        $("#photos").click();
+    });
+
+    $("#edit-pp").click(function () {
+        $("#profile").click();
+    });
+
+    $('.carousel-inner').hover(
+        function () {
+            $('.edit-cover',this).stop(true,true).fadeIn("fast");
+            $(this).toggleClass('open');
+        },
+        function () {
+            $('.edit-cover',this).stop(true,true).fadeOut("fast");
+            $(this).toggleClass('open');
+        }
+    );
+    $('#edit-cover').click(function () {
+        console.log('clicked');
+    });
 </script>
+@include('include.footer')
