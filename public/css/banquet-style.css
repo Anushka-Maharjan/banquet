@@ -3097,7 +3097,7 @@ input:placeholder-shown {
 .edit-cover{
   color:white;
   border-radius: 5px;
-  padding: 5px;
+  padding: 2px 2px;
   width:auto;
   height:3rem;
   position: absolute;
@@ -3120,6 +3120,7 @@ input:placeholder-shown {
 }
 .cov{
   display: inline-flex;
+    height:100%;
 }
 .cp-txt{
   color: white;
@@ -3131,7 +3132,8 @@ input:placeholder-shown {
   display: inline;
 }
 .exsisting-opt label{
-  margin-right: 25px;
+  margin-right: 13px;
+    margin-bottom: 13px;
 }
 .exsisting-opt p{
   margin: 0;
@@ -3192,3 +3194,12 @@ input:placeholder-shown {
 }
 /*#############################################Portfolio update banner css ends#############################################s*/
 
+
+
+/*#############################################Portfolio image uploader css starts#############################################s*/
+.cl-ed{
+    position:absolute;
+    right:10px;
+    top:-2rem;
+}
+/*#############################################Portfolio image uploader css ends#############################################s*/

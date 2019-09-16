@@ -92,6 +92,29 @@
         background-image:none;
 
     }
+    .exsisting-opt{
+        width:100%;
+        display: block;
+    }
+    .exsisting-opt img {
+        width: 9.74rem;
+        height: 9rem;
+    }
+    .exsisting-opt label {
+        margin-right: 8px;
+    }
+    .width70 {
+        width: 95% !important;
+    }
+    .cl-ed{
+        position: absolute;
+        right: 10px;
+        top: -30px;
+        height:auto
+    }
+    .modal-content h3{
+        margin:10px;
+    }
     .custom-select {
         border-right: none;
     }

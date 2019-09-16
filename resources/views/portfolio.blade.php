@@ -11,7 +11,7 @@
                     <a href="{{asset($result['photographer']->banner)}}" data-lightbox="promo"><img src="{{asset('photos')}}" class="img-responsive" ></a>
                 </div>
             </div>
-            @if (\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->role=='photo')
+{{--            @if (\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->role=='photo')--}}
                 <a onclick="displaymodel('bannerupdate')"><div class="edit-cover" id="edit-cover">
                     <div class="cov" >
                         <img src="{{asset('images/icon/cam.png')}}" class="img-responsive cp">
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 </a>
-            @endif
+            {{--@endif--}}
         </div>
         <div class="pg-enquire" >
             <button onclick="displaymodel('enquire')">Enquire</button>
@@ -222,6 +222,8 @@
         </div>
     </div>
 </div>
+<script src="{{asset('js/grid-gallery.min.js')}}"></script>
+
 @if($result['photographer']->videography==1)
 <div class="container video-space">
     <h3 class="text-center">Promo Video </h3>
@@ -486,11 +488,11 @@
         <div class="modal-content">
             <div class="modal-header">
                 <div class="row">
-                    <div class="col-sm-11">
+                    <div class="col-sm-12">
                         <h3>Configure Profile</h3>
                     </div>
-                    <div class="col-sm-1">
-                        <button type="button" class="close" data-dismiss="modal" onclick="displayDivs()">&times;</button>
+                    <div class="col-sm-12">
+                        <button type="button" class="close cl-ed" data-dismiss="modal" onclick="displayDivs()">&times;</button>
                     </div>
                 </div>
             </div>
@@ -498,10 +500,7 @@
                 <div class="" style="border: 1px solid lightgray; padding: 10px; box-shadow: 0 10px 15px rgba(0,0,0,0.6)">
     <div class="upl-new-container">
         <div class="upl-innner">
-            <div class="upl-mid-conatiner">
-                <img src="images/icon/up.png" class="img-responsive">
-                <h3 class="text-center">Upload Image</h3>
-            </div>
+                <input type="file" style="width:100%;height:100%">
         </div>
     </div>
 
@@ -527,19 +526,18 @@
     </div>
 </div>
 
-<script src="{{asset('js/grid-gallery.min.js')}}"></script>
 
 <script>
 
     function displaymodel(type) {
         $('body').css("overflow",'hidden');
-        @if (\Illuminate\Support\Facades\Auth::check())
+{{--        @if (\Illuminate\Support\Facades\Auth::check())--}}
             if (type == 'enquire'){
-                @if(\Illuminate\Support\Facades\Auth::user()->role=='user')
+{{--                @if(\Illuminate\Support\Facades\Auth::user()->role=='user')--}}
                     $('#myEnquiryModal').modal({show:true});
-                @else
-                    $('#login-modal').modal({show: true});
-                @endif
+                {{--@else--}}
+//                    $('#login-modal').modal({show: true});
+                {{--@endif--}}
             }else if (type =='video') {
                 $('#myVideoModal').modal({show: true});
             }else if (type=='login') {
@@ -549,9 +547,9 @@
             }else{
                 $('#editProfile').modal({show: true});
             }
-        @else
-            $('#login-modal').modal({show: true});
-        @endif
+        {{--@else--}}
+            {{--$('#login-modal').modal({show: true});--}}
+        {{--@endif--}}
 
     }
     

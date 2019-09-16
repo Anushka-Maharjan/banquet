@@ -22,7 +22,7 @@
 
     <script src="{{asset('js/nepali.datepicker.v2.2.min.js')}}"></script>
     <script src="{{asset('js/swiper.min.js')}}"></script>
-    <script src="{{asset('js/grid-gallery.min.js')}}"></script>
+{{--    <script src="{{asset('js/grid-gallery.min.js')}}"></script>--}}
     <script src="{{asset('js/lightbox-plus-jquery.min.js')}}"></script>
     <script src="{{asset('js/bootstrap.min.js')}}"></script>
     <script src="{{asset('js/owl.carousel.js')}}"></script>
