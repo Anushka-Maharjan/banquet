@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Photographer;
 use App\Photosphoto;
 use App\User;
+use foo\bar;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Intervention\Image\Facades\Image;
@@ -47,6 +48,7 @@ class PhotographersController extends Controller
             'videography'=>'required',
             'genre'=>'required',
             'bio'=>'required',
+            'link'=>'required_if:videography,1',
             'experience'=>'required'
         ]);
         $photographer=Photographer::where('id','=',$request->input('id'))->first();
@@ -66,7 +68,21 @@ class PhotographersController extends Controller
             }
             $i++;
         }
+        if ($request->input('videography')==1){
+            $link=$request->input('link');
+            if (strpos($link,'watch?v=')!==false){
+                $broken=explode('watch?v=',$link);
+                $broken=explode('&',$broken[1]);
+                $photographer->url=$broken[0];
+            }else if(strpos($link,'youtu.be/')){
+                $broken=explode('youtu.be/',$link);
+                $photographer->url=$broken[1];
+            }else{
+                return back()->with('error','Your youtube link is wrong');
+            }
+        }
         $photographer->save();
+
 
         $user=User::where('id','=',$photographer->user_id)->first();
         $user->logged_in=1;
@@ -118,6 +134,47 @@ class PhotographersController extends Controller
         return redirect()->back()->with('success','Your DP has been changed');
     }
 
+    public function changecover(Request $request){
+        $photographer=Photographer::where('id','=',$request->input('id'))->first();
+        if($request->hasFile('banner')){
+            $filenameWithExt = $request->file('banner')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $extension = $request->file('banner')->getClientOriginalExtension();
+            $filenameToStore = $filename . "_" . time() . "." . $extension;
+            //        compress image
+            $img = Image::make($request->file('banner'));
+            $width = $img->width();
+            $height = $img->height();
+            $measure = ($width > $height) ? $width : $height;
+            $scale = $measure / 1500;
+            $img->encode('jpg', 60);
+            $img->resize($width / $scale, $height / $scale);
+            $img->save('storage/photo/photos/' . $filenameToStore);
+
+            $photographer->banner=$filenameToStore;
+        }else{
+            $photographer->banner=$request->input('banner-option');
+        }
+        $photographer->save();
+        return back()->with('success','Banner Successfully changed');
+    }
+
+    public function changevideo(Request $request){
+        $photographer=Photographer::where('id','=',$request->input('id'))->first();
+        $link=$request->input('video');
+        if (strpos($link,'watch?v=')!==false){
+            $broken=explode('watch?v=',$link);
+            $broken=explode('&',$broken[1]);
+            $photographer->url=$broken[0];
+        }else if(strpos($link,'youtu.be/')){
+            $broken=explode('youtu.be/',$link);
+            $photographer->url=$broken[1];
+        }else{
+            return back()->with('error','Your youtube link is wrong');
+        }
+        $photographer->save();
+        return back()->with('success','Your video has been updated');
+    }
     public function addphotos(Request $request){
         $this->validate($request,[
             'photos'=>'required',
@@ -126,7 +183,6 @@ class PhotographersController extends Controller
         $count=0;
         foreach ($request->file('photos') as $photo){
             $photos=Photosphoto::where('photo_id','=',$request->input('id'))->get();
-            echo count($photos);
             if (count($photos)<15) {
                 $photosphoto = new Photosphoto();
                 $filenameWithExt = $photo->getClientOriginalName();
@@ -140,7 +196,7 @@ class PhotographersController extends Controller
                 $height = $img->height();
                 $measure = ($width > $height) ? $width : $height;
                 $scale = $measure / 1500;
-                $scale_thumbnail = $measure / 500;
+                $scale_thumbnail = $height / 450;
                 $img->encode('jpg', 60);
                 $img->resize($width / $scale, $height / $scale);
                 $img->save('storage/photo/photos/' . $filenameToStore);

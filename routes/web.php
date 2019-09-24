@@ -23,7 +23,8 @@ Route::get('/', function () {
 Route::get('/error', function () {
     return view('error');
 });
-Route::get('/photohome','PagesController@banquet');
+Route::get('/{username}/home','PagesController@banquet');
+
 Route::get('/banquet/{id}', 'PagesController@banquet');
 Route::post('/book/', 'PagesController@book');
 Route::post('user/login','UserController@userlogin');
@@ -32,6 +33,8 @@ Route::get('/verify/{id}','UserController@userverify');
 Route::post('/portfolio/enquire','PagesController@enquire');
 Route::get('/portfolio/{username}','PagesController@portfolio');
 Route::post('/portfolio/','PagesController@video');
+Route::post('/portfolio/changecover','PhotographersController@changecover');
+Route::post('/portfolio/changevideo','PhotographersController@changevideo');
 Route::get('/search/{name}','PagesController@searchaddress');
 Route::get('/search/{address}/{hall}','PagesController@searchaddress');
 Route::get('/search/{address}/{photographer}/{genre}','PagesController@searchphotographer');

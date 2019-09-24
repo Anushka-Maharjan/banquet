@@ -375,9 +375,6 @@ class PagesController extends Controller
         $book->banquet=$request->input('banquet');
         $book->expected_pax=$request->input('expected_pax');
         $book->save();
-
-
-
     }
 
 }

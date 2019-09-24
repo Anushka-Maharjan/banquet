@@ -13,6 +13,7 @@ class VerifyEmail extends Mailable
     use Queueable, SerializesModels;
 
     protected $id;
+    protected $user;
 
     /**
      * Create a new message instance.
@@ -22,6 +23,7 @@ class VerifyEmail extends Mailable
     public function __construct(User $user)
     {
         $this->id = $user->id;
+        $this->user=$user;
     }
 
     /**
@@ -32,6 +34,10 @@ class VerifyEmail extends Mailable
     public function build()
     {
         $url = 'http://banquet/verify/'.$this->id;
-        return $this->markdown('emails.verifyemail')->with('url',$url);
+        $data=[
+          'url'=>$url,
+          'user'=>$this->user
+        ];
+        return $this->markdown('emails.verifyemail')->with($data);
     }
 }

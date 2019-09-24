@@ -64,6 +64,8 @@ class UserController extends Controller
             $photographer->user_id=$user->id;
             $photographer->contact=$user->contact;
             $photographer->name=$user->name;
+            $photographer->banner="banner.jpg";
+            $photographer->dp="dummy.png";
             $photographer->save();
             return redirect('/register-success');
         }else{

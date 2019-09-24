@@ -76,10 +76,10 @@
                     <div class="bg-gray">
                         {!! Form::open(['action'=>'UserController@userlogin','method'=>'POST','enctype'=>'multipart/form-data']) !!}
                             <label for="contact">Email</label>
-                            <input type="email" id="contact" name="email" placeholder="Your email.." required>
+                            <input type="email" name="email" placeholder="Your email.." required>
 
                             <label for="password">Password</label>
-                            <input type="password" id="password" name="password" placeholder="Your password.." required>
+                            <input type="password" name="password" placeholder="Your password.." required>
 
                             <input type="submit" value="Login">
                         {!! Form::close() !!}
@@ -119,23 +119,23 @@
                                         
                                         <div class="col-md-6">
                                         <label for="fname">Full Name</label>
-                                        <input type="text" id="fname" name="fname" placeholder="Your full name.." required>
+                                        <input type="text" name="fname" placeholder="Your full name.." required>
                                         </div>
                                         <div class="col-md-6">
                                         <label for="contact">Phone Number</label>
-                                        <input type="number" id="contact" name="contact" placeholder="Your number.." required>
+                                        <input type="number" name="contact" placeholder="Your number.." required>
                                         </div>
                                         <div class="col-md-12">
                                         <label for="contact">Email</label>
-                                        <input type="email" id="contact" name="email" placeholder="Your email.." >
+                                        <input type="email" name="email" placeholder="Your email.." >
                                         </div>
                                         <div class="col-md-6">
                                         <label for="password">Password</label>
-                                        <input type="password" id="password" name="password" placeholder="Your password.." required>
+                                        <input type="password" name="password" placeholder="Your password.." required>
                                         </div>
                                             <div class="col-md-6">
                                         <label for="password">Confirm Password</label>
-                                        <input type="password" id="password" name="password_confirmation" placeholder="Your password.." required>
+                                        <input type="password" name="password_confirmation" placeholder="Your password.." required>
                                             </div>
                                         <input type="submit" value="Register">
                                     </form>
@@ -183,15 +183,15 @@
                             @csrf
                             <span class="col-md-6">
                             <label for="fname">Full Name</label>
-                            <input type="text" id="fname" name="name" placeholder="Your full name.." required>
+                            <input type="text" name="name" placeholder="Your full name.." required>
                             </span>
                             <span class="col-md-6">
                             <label for="contact">Phone Number</label>
-                            <input type="number" id="contact" name="contact" placeholder="Your number.." required>
+                            <input type="number" name="contact" placeholder="Your number.." required>
                             </span>
                             <div class="col-md-12">
                                 <label for="contact">Email</label>
-                                <input type="email" id="contact" name="email" placeholder="Your email.." >
+                                <input type="email" name="email" placeholder="Your email.." >
                             </div>
                             <div class="col-md-12">
                                 <label for="contact">Banquet Name</label>
@@ -199,11 +199,11 @@
                             </div>
                             <span class="col-md-6">
                             <label for="password">Password</label>
-                            <input type="password" id="password" name="password" placeholder="Your password.." required>
+                            <input type="password" name="password" placeholder="Your password.." required>
                             </span>
                             <span class="col-md-6">
                             <label for="password">Confirm Password</label>
-                            <input type="password" id="password" name="password_confirmation" placeholder="Your password.." required>
+                            <input type="password" name="password_confirmation" placeholder="Your password.." required>
                                 </span>
                             <input type="submit" value="Register">
                         </form>

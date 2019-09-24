@@ -2630,6 +2630,10 @@ h5{
 .container-contact100 input{
   height:auto;
 }
+
+.height100percent{
+    height: 100%;
+}
 /*################################portfolio css ends#########################################*/
 
 .width70{
@@ -3132,7 +3136,7 @@ input:placeholder-shown {
   display: inline;
 }
 .exsisting-opt label{
-  margin-right: 13px;
+  margin-right: 1.5%;
     margin-bottom: 13px;
 }
 .exsisting-opt p{
@@ -3162,6 +3166,7 @@ input:placeholder-shown {
   outline: 2px solid #f00;
 }
 .upl-new-container{
+  position: relative;
   border: 1px solid #acacac;
   width:100%;
   padding: 10px

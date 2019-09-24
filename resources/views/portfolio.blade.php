@@ -8,10 +8,10 @@
         <div class="carousel-inner">
             <div class="item active" id ="slide0">
                 <div >
-                    <a href="{{asset($result['photographer']->banner)}}" data-lightbox="promo"><img src="{{asset('photos')}}" class="img-responsive" ></a>
+                    <a href="{{asset('storage\photo\photos\\'.$result['photographer']->banner)}}" data-lightbox="promo"><img src="{{asset('storage\photo\photos\\'.$result['photographer']->banner)}}" class="img-responsive" ></a>
                 </div>
             </div>
-{{--            @if (\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->role=='photo')--}}
+            @if (\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->role=='photo')
                 <a onclick="displaymodel('bannerupdate')"><div class="edit-cover" id="edit-cover">
                     <div class="cov" >
                         <img src="{{asset('images/icon/cam.png')}}" class="img-responsive cp">
@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 </a>
-            {{--@endif--}}
+            @endif
         </div>
         <div class="pg-enquire" >
             <button onclick="displaymodel('enquire')">Enquire</button>
@@ -65,13 +65,15 @@
             @endif
 
                 <div class="row">
-                    @if ($result['configured']==1)
                         <div class="col-md-3">
                             <h4>Name</h4>
                             <p>{{$result['photographer']->name}}</p><br>
+                            @if ($result['configured']==1)
                             <h4>Address</h4>
                             <p>{{$result['photographer']->address}}</p><br>
+                            @endif
                         </div>
+                    @if ($result['configured']==1)
                         <div class="col-md-3">
                             <h4>Experience</h4>
                             <p>{{$result['photographer']->experience}}</p><br>
@@ -141,7 +143,7 @@
                         <div class="review-section">
                             <div class="row" style="border-bottom: 1px solid #c8c8c8; padding:5px">
                                 <div class="col-md-2">
-                                    <img src="images/man.jpg" class="img-responsive" style="width:60px; height:65px;margin-top: 10px">
+                                    {{--<img src="images/man.jpg" class="img-responsive" style="width:60px; height:65px;margin-top: 10px">--}}
                                 </div>
                                 <div class="col-md-10">
                                     <div style="position: relative;display: inline-flex;width:100%">
@@ -159,7 +161,7 @@
                             </div>
                             <div class="row" style="border-bottom: 1px solid #c8c8c8; padding:5px">
                                 <div class="col-md-2">
-                                    <img src="images/man.jpg" class="img-responsive" style="width:60px; height:65px;margin-top: 10px">
+                                    {{--<img src="images/man.jpg" class="img-responsive" style="width:60px; height:65px;margin-top: 10px">--}}
                                 </div>
                                 <div class="col-md-10">
                                     <div style="position: relative;display: inline-flex;width:100%">
@@ -196,10 +198,10 @@
     <!--    </div>-->
 
 </div>
-
+@if (count($result['photos'])>0 || ((\Illuminate\Support\Facades\Auth::check()) && (\Illuminate\Support\Facades\Auth::user()->role=='photo')))
 <div class="container gallery-space">
     <div id="gg-screen" hidden></div>
-    <h3 class="text-center">My Photo Gallery</h3>
+    <h3 class="text-center">Photo Gallery</h3>
 
     <div class="main">
         <div class="gg-box">
@@ -207,7 +209,7 @@
             <img style="object-fit: contain" id="add_image" src="{{asset('images/upload.png')}}">
             @endif
             @foreach($result['photos'] as $photo)
-                    <img src="{{asset('storage\photo\photos\thumbnail\\'.$photo->photo)}}">
+                    <img class="opn" id="{{$photo->photo}}" src="{{asset('storage\photo\photos\thumbnail\\'.$photo->photo)}}">
             @endforeach
                 @if (\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->role=='photo')
                 {!! Form::open(['action'=>'PhotographersController@addphotos','method'=>'POST','class'=>'form-horizontal','id'=>'photoform','enctype'=>'multipart/form-data']) !!}
@@ -222,15 +224,16 @@
         </div>
     </div>
 </div>
+@endif
 <script src="{{asset('js/grid-gallery.min.js')}}"></script>
 
 @if($result['photographer']->videography==1)
 <div class="container video-space">
     <h3 class="text-center">Promo Video </h3>
     @if (\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->role=='photo')
-        <button onclick="editVideo()">Edit Video</button>
+        <button style="float: right" onclick="displaymodel('video')"><i class="fa fa-refresh"></i> Change Video</button>
     @endif
-    <iframe class="promo-video" src="https://www.youtube.com/embed/lx9UPNzOXg8" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe class="promo-video" src="https://www.youtube.com/embed/{{$result['photographer']->url}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
 @endif
 
@@ -267,10 +270,15 @@
                                 <input class="input100" type="text" name="contact" placeholder="Enter Contact" value="{{$result['photographer']->contact}}">
                             </div>
                             <div class="wrap-input100 bg1 rs1-wrap-input100">
-                                <span class="label-input100 ">Do you offer Videography?</span>
-                                <div class="form-group">
-                                    <input type="radio" name="videography" value="1"> Yes
-                                    <input type="radio" name="videography" value="0"> No
+                                <div >
+                                    <span class="label-input100 ">Do you offer Videography?</span>
+                                    <div class="form-group" id="videography-div-config">
+                                        <input type="radio" name="videography" class="videography-config" value="1" @if ($result['photographer']->videography==1) checked @endif> Yes
+                                        <input type="radio" name="videography" class="videography-config" value="0" @if ($result['photographer']->videography==0) checked @endif> No
+                                    </div>
+                                </div>
+                                <div id="video-div-config">
+
                                 </div>
                             </div>
                                 <div class="wrap-input100 bg1 rs1-wrap-input100">
@@ -347,7 +355,7 @@
                                 <span class="label-input100">Name *</span>
                                 <input class="input100" type="text" name="name" placeholder="Enter Name" value="{{$result['photographer']->name}}">
                             </div>
-
+                            <input type="hidden" name="id" value="{{$result['photographer']->id}}">
                             <div class="wrap-input100 bg1 rs1-wrap-input100" data-validate = "Enter Address" >
                                 <span class="label-input100">Address</span>
                                 <input class="input100" type="text" name="address" placeholder="Enter Address" value="{{$result['photographer']->address}}">
@@ -379,11 +387,23 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="wrap-input100 bg1">
-                                <span class="label-input100 ">Do you offer Videography?</span>
-                                <div class="form-group">
-                                    <input type="radio" name="videography" value="1" @if ($result['photographer']->videography==1) checked @endif> Yes
-                                    <input type="radio" name="videography" value="0" @if ($result['photographer']->videography==0) checked @endif> No
+                            <div class="wrap-input100 validate-input bg1 rs1-wrap-input100" data-validate = "Enter Your Name">
+                                <span class="label-input100">Contact *</span>
+                                <input class="input100" type="text" name="contact" placeholder="Enter Contact" value="{{$result['photographer']->contact}}">
+                            </div>
+                            <div class="wrap-input100 bg1 rs1-wrap-input100">
+                                <div >
+                                    <span class="label-input100 ">Do you offer Videography?</span>
+                                    <div class="form-group" id="videography-div-edit">
+                                        <input type="radio" name="videography" class="videography-edit" value="1" @if ($result['photographer']->videography==1) checked @endif> Yes
+                                        <input type="radio" name="videography" class="videography-edit" value="0" @if ($result['photographer']->videography==0) checked @endif> No
+                                    </div>
+                                </div>
+                                <div id="video-div-edit">
+                                    @if($result['photographer']->videography==1)
+                                        <span class="label-input100">Link to Video(youtube)*</span>
+                                        <input class="input100" type="text" name="link" placeholder="Enter Link" value="https://www.youtube.com/watch?v={{$result['photographer']->url}}">
+                                    @endif
                                 </div>
                             </div>
                             <div class="wrap-input100 validate-input bg0 rs1-alert-validate" data-validate = "Please Type Your Bio">
@@ -405,7 +425,6 @@
 
             </div>
         </div>
-
     </div>
 </div>
 
@@ -417,7 +436,7 @@
             <div class="modal-header">
                 <div class="row">
                     <div class="col-sm-11">
-                        <h3>Configure Profile</h3>
+                        <h3>Enquire</h3>
                     </div>
                     <div class="col-sm-1">
                         <button type="button" class="close" data-dismiss="modal" onclick="displayDivs()">&times;</button>
@@ -482,6 +501,49 @@
     </div>
 </div>
 
+<div class="modal fade" id="edivideo" role="dialog">
+    <div class="modal-dialog " >
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="row">
+                    <div class="col-sm-11">
+                        <h3>Update Video</h3>
+                    </div>
+                    <div class="col-sm-1">
+                        <button type="button" class="close" data-dismiss="modal" onclick="displayDivs()">&times;</button>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-body" style="height: auto">
+                <div class="container-contact100">
+                    <div class="wrap-contact100">
+                        {!! Form::open(['action'=>'PhotographersController@changevideo','method'=>'POST','class'=>'contact100-form validate-form','enctype'=>'multipart/form-data']) !!}
+                        @csrf
+                        <input type="hidden" name="id" value="{{$result['photographer']->id}}">
+                        <div class="wrap-input100 validate-input bg1" data-validate = "Enter Your Name">
+                            <span class="label-input100">Video Url (Youtube) *</span>
+                            <input class="input100" type="video" name="video" placeholder="Enter URL" value="https://www.youtube.com/watch?v={{$result["photographer"]->url}}">
+                        </div>
+                        <div class="container-contact100-form-btn">
+                            <button class="contact100-form-btn">
+                            <span>
+                                Submit
+                                <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+                            </span>
+                            </button>
+                        </div>
+                        {!! Form::close() !!}
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
 <div class="modal fade" id="bannerupdate" role="dialog">
     <div class="modal-dialog width70" >
         <!-- Modal content-->
@@ -489,7 +551,7 @@
             <div class="modal-header">
                 <div class="row">
                     <div class="col-sm-12">
-                        <h3>Configure Profile</h3>
+                        <h3>Update Banner</h3>
                     </div>
                     <div class="col-sm-12">
                         <button type="button" class="close cl-ed" data-dismiss="modal" onclick="displayDivs()">&times;</button>
@@ -497,49 +559,51 @@
                 </div>
             </div>
             <div class="modal-body" style="height: auto">
+                @include('admin.includes.messages')
                 <div class="" style="border: 1px solid lightgray; padding: 10px; box-shadow: 0 10px 15px rgba(0,0,0,0.6)">
-    <div class="upl-new-container">
-        <div class="upl-innner">
-                <input type="file" style="width:100%;height:100%">
-        </div>
-    </div>
+                    {!! Form::open(['action'=>'PhotographersController@changecover','method'=>'POST','class'=>'form-horizontal height100percent','enctype'=>'multipart/form-data']) !!}
+                    <input type="hidden" name="id" value="{{$result['photographer']->id}}">
+                    <div class="upl-new-container">
+                        <div class="upl-innner">
+                            <input type="file" name="banner" onchange="addclearfile()" style="width:100%;height:100%">
+                           <div id="clear-file">
 
-    <div class="existing-container">
-        <h3>Choose existing image:</h3>
-        <div class="exsisting-opt">
-            @foreach($result['photos'] as $photo)
-                <label>
-                    <input type="radio" name="ex-opt" value="{{$photo->photo}}">
-                    <img src="{{asset('storage\photo\photos\thumbnail\\'.$photo->photo)}}">
-                </label>
-            @endforeach
- 
-        </div>
-
-    </div>
-</div>
-
-
+                           </div>
+                        </div>
+                    </div>
+                    <div class="existing-container">
+                        <h3>Choose existing image:</h3>
+                        <div class="exsisting-opt">
+                            @foreach($result['photos'] as $photo)
+                                <label>
+                                    <input type="radio" name="banner-option" value="{{$photo->photo}}">
+                                    <img src="{{asset('storage\photo\photos\thumbnail\\'.$photo->photo)}}">
+                                </label>
+                            @endforeach
+                        </div>
+                        <input type="submit" onclick="return checkform()" class="btn btn-success width100" name="submit-banner" value="Submit" >
+                    </div>
+                    {!! Form::close() !!}
+                </div>
             </div>
         </div>
 
     </div>
 </div>
 
-
 <script>
 
     function displaymodel(type) {
         $('body').css("overflow",'hidden');
-{{--        @if (\Illuminate\Support\Facades\Auth::check())--}}
+        @if (\Illuminate\Support\Facades\Auth::check())
             if (type == 'enquire'){
-{{--                @if(\Illuminate\Support\Facades\Auth::user()->role=='user')--}}
+                @if(\Illuminate\Support\Facades\Auth::user()->role=='user')
                     $('#myEnquiryModal').modal({show:true});
-                {{--@else--}}
-//                    $('#login-modal').modal({show: true});
-                {{--@endif--}}
+                @else
+                   $('#login-modal').modal({show: true});
+                @endif
             }else if (type =='video') {
-                $('#myVideoModal').modal({show: true});
+                $('#edivideo').modal({show: true});
             }else if (type=='login') {
                 $('#myModal').modal({show: true});
             }else if (type=='bannerupdate') {
@@ -547,12 +611,61 @@
             }else{
                 $('#editProfile').modal({show: true});
             }
-        {{--@else--}}
-            {{--$('#login-modal').modal({show: true});--}}
-        {{--@endif--}}
+        @else
+            $('#login-modal').modal({show: true});
+        @endif
 
     }
-    
+    var wrapper1=$('#video-div-edit');
+    $('#videography-div-edit').change(
+        function (e) {
+            radioValue = $("input[class='videography-edit']:checked").val();
+            if (radioValue=="1"){
+                $(wrapper1).empty();
+                $(wrapper1).append(
+                    '<span class="label-input100">Link to Video(youtube)*</span>\n' +
+                    '<input class="input100" type="text" name="link" placeholder="Enter Link"  value="https://www.youtube.com/watch?v={{$result["photographer"]->url}}">'
+                )
+            }else{
+                $(wrapper1).empty();
+            }
+        }
+    );
+    var wrapper2=$('#video-div-config');
+    $('#videography-div-config').change(
+        function (e) {
+            radioValue = $("input[class='videography-config']:checked").val();
+            if (radioValue=="1"){
+                $(wrapper2).empty();
+                $(wrapper2).append(
+                    '<span class="label-input100">Link to Video(youtube)*</span>\n' +
+                    '<input class="input100" type="text" name="link" placeholder="Enter Link">'
+                )
+            }else{
+                $(wrapper2).empty();
+            }
+        }
+    );
+
+    function checkform() {
+        var value=$("input[name='banner-option']:checked").val();
+        if (value!=null && $('input[name=banner]').val()!=""){
+            alert('cannot select both');
+            return false;
+        }else if(value==null && $('input[name=banner]').val()==""){
+            alert('must select one');
+            return false;
+        }
+        return true
+    }
+    //uncheck radio button on banner update in click
+    $('input[name=banner-option]').click(function(){
+        if (this.previous) {
+            this.checked = false;
+        }
+        this.previous = this.checked;
+    });
+
     function displayDivs() {
         $('body').css("overflow",'auto');
     }
@@ -589,6 +702,18 @@
             }
         }
     });
+
+    function addclearfile() {
+        console.log('clear file');
+        $('#clear-file').empty();
+        $('#clear-file').append('<p onclick="clearfile()" style="position:absolute;right:15px;top:10px">Clear File</p>');
+    }
+    
+    function clearfile() {
+        $('input[name=banner]').val('');
+        $('#clear-file').empty();
+    }
+
     $('.qua').click(function () {
         var qstarId = event.target.id;
         var qposition = qstarId.split('-');
@@ -661,8 +786,6 @@
             $(this).toggleClass('open');
         }
     );
-    $('#edit-cover').click(function () {
-        console.log('clicked');
-    });
+
 </script>
 @include('include.footer')
