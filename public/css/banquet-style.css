@@ -2496,8 +2496,12 @@ h5{
 }
 .gg-box .fa-trash{
     display: none;
-    color:red;
-    font-size: 30px;
+    padding:5px;
+    background: rgba(0,0,0,0.5);
+    width:30px;
+    height:35px;
+    color:white;
+    font-size: 25px;
     position: absolute;
     top:0;
     right:10px;
