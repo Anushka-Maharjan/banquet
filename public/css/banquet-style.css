@@ -2489,6 +2489,26 @@ h5{
   font-style: italic;
   color: #959595;
 }
+.img-block{
+    position: relative;
+    height:inherit;
+    with:inherit
+}
+.gg-box .fa-trash{
+    display: none;
+    color:red;
+    font-size: 30px;
+    position: absolute;
+    top:0;
+    right:10px;
+}
+.img-block:hover .fa-trash{
+    display: block;
+}
+
+.opn{
+    position: relative;
+}
 #gg-screen{
   background: rgba(0, 0, 0, 0.8);
 }

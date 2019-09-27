@@ -209,7 +209,10 @@
             <img style="object-fit: contain" id="add_image" src="{{asset('images/upload.png')}}">
             @endif
             @foreach($result['photos'] as $photo)
+                    <div  class ="img-block" >
                     <img class="opn" id="{{$photo->photo}}" src="{{asset('storage\photo\photos\thumbnail\\'.$photo->photo)}}">
+                    <i class="fa fa-trash"></i>
+                    </div>
             @endforeach
                 @if (\Illuminate\Support\Facades\Auth::check() && \Illuminate\Support\Facades\Auth::user()->role=='photo')
                 {!! Form::open(['action'=>'PhotographersController@addphotos','method'=>'POST','class'=>'form-horizontal','id'=>'photoform','enctype'=>'multipart/form-data']) !!}
