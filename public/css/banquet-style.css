@@ -2505,6 +2505,7 @@ h5{
     position: absolute;
     top:0;
     right:10px;
+    box-shadow: 0 5px 5px rgba(0,0,0,0.5);
 }
 .img-block:hover .fa-trash{
     display: block;
